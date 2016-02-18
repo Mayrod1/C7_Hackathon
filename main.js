@@ -21,9 +21,9 @@
 
 
 /*
-*Function: getTweetsbySearch for tags function
+*Function: getTweetsbyTag
 * params: takes in text input
-* does: makes api call and stores tweets
+* does: makes api call based on text and stores tweets
 * returns: an array of tweets collected by param search info
 * */
 
@@ -31,14 +31,14 @@
 /*
 * Function: getTweetsbyLocation,
 * params: takes in coordinates/city *type depends on twitter api search requirements
-* does: makes api call and stores tweets
+* does: makes api call based on numbers and stores tweets
 * returns: an array of tweets collected by param search info
 * */
 
 
 /*
 * Function: parseTweets,
- * params: tweet objects?
+ * params: tweet object array
  * does: filters tweet info down to tweet text and location info
  * returns: an array of tweet objects that holds tweet text and location data
 * */
