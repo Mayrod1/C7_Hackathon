@@ -8,9 +8,25 @@
 
 /*
 * Document Ready function
-* holds button click events to activate correct functions
+* holds button click events connects to input controller
 * */
 
+/*
+ * Input Controller calls all the other functions
+ */
+
+/*
+ * Function: parseTweets,
+ * params: tweet object array
+ * does: filters tweet info down to tweet text and location info
+ * returns: an array of tweet objects that holds tweet text and location data
+ * */
+
+
+
+/*
+* Google API caller object
+* */
 
 /*
 * Function: getLocation
@@ -20,6 +36,11 @@
 * */
 
 
+
+
+/*
+ * Twitter API caller object that encapsulates twitter api calls
+ */
 /*
 *Function: getTweetsbyTag
 * params: takes in text input
@@ -36,17 +57,14 @@
 * */
 
 
-/*
-* Function: parseTweets,
- * params: tweet object array
- * does: filters tweet info down to tweet text and location info
- * returns: an array of tweet objects that holds tweet text and location data
-* */
 
+
+
+//Display Object gets called from input controller
 
 /*
 * Function: displayTweets
 * params: tweet array
-* does: loops through array and applies them to google map api
+* does: loops through array and applies them to google map
 * returns: updates html, returns nothing
 * */
