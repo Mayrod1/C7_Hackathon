@@ -13,6 +13,14 @@
 
 
 /*
+* Function: getLocation
+* params: *onclick data
+* does: takes location data from google maps api and calls getTweetsByLocation
+* return: nothing;
+* */
+
+
+/*
 *Function: getTweetsbySearch for tags function
 * params: takes in text input
 * does: makes api call and stores tweets
