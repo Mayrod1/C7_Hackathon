@@ -6,6 +6,10 @@ var apiFlickr = new ApiFlickr();
  */
 function ApiFlickr() {
 
+    this.radiusSearch = function(searchString, timePeriod, longitude, latitude, radiusInMiles){
+
+    };
+
     /**
      * flickrPhotoSearch - Private method for initiating AJAX calls to Flickr API, modified to include the static url.
      * @param {Object} dataObject - Object containing all data keys to be passed to Flickr API.
@@ -38,5 +42,63 @@ function ApiFlickr() {
         }
         photoUrl += ".jpg";
         return photoUrl;
+    }
+
+    /**
+     * FlickrData - Base constructor for data object sent via Flickr API call.
+     * @param {string} searchText - Search string
+     * @param {Date[]} dateRange - Date range used to limit search.  One date acts as minimum date.  Empty array ignores date filter.
+     * @constructor
+     */
+    function FlickrData(searchText, dateRange) {
+        this.text = searchText;
+        if (Array.isArray(dateRange) && dateRange.length >= 1) {
+            this.min_taken_date = dateRange[0];
+            if (dateRange.length >= 2) {
+                this.max_taken_date = dateRange[1];
+            }
+        }
+        this.has_geo = 1;
+        this.per_page = 100;
+        this.content_type = 1;
+    }
+
+    /**
+     * UnlocalizedData - Constructor based upon FlickrData, used to search without specifying location.
+     * @param {string} searchText - Search string
+     * @param {Date[]} dateRange - Date range used to limit search.  One date acts as minimum date.  Empty array ignores date filter.
+     * @constructor
+     */
+    function UnlocalizedData (searchText, dateRange) {
+        FlickrData.call(this, searchText, dateRange);
+        this.sort = "relevance";
+    }
+
+    /**
+     * RadialData - Constructor based upon FlickrData, used to search for closest results to a given location.
+     * @param {string} searchText - Search string
+     * @param {Date[]} dateRange - Date range used to limit search.  One date acts as minimum date.  Empty array ignores date filter.
+     * @param {Array} location - Array containing longitude, latitude, and radius in miles.
+     * @constructor
+     */
+    function RadialData (searchText, dateRange, location) {
+        FlickrData.call(this, searchText, dateRange);
+        this.long = location[0];
+        this.lat = location[1];
+        this.radius = location[2];
+        this.radius_units = "mi";
+        this.per_page = 50;
+    }
+
+    /**
+     * BoundingBoxData - Constructor based upon FlickrData, used to search for results spread evenly in a bounded geographical area.
+     * @param {string} searchText - Search string
+     * @param {Date[]} dateRange - Date range used to limit search.  One date acts as minimum date.  Empty array ignores date filter.
+     * @param {number[]|string[]} location - Array containing bounding box information as [min-long, min-lat, max-long, max-lat].
+     * @constructor
+     */
+    function BoundingBoxData (searchText, dateRange, location) {
+        FlickrData.call(this, searchText, dateRange);
+        this.bbox = location.join(",");
     }
 }
