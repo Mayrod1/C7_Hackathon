@@ -21,7 +21,22 @@ function newTweetObj(name, text, lat, long)
     return tweetObj;
 }
 
+
+/*
+* tweetResults - stores simpleTweet objects
+*   TODO: find a better way to store this data without a global var
+* */
 var tweetResults = [];
+
+/*
+* resetTweetResults - no params, no return, empties out array tweetResults
+* */
+function resetTweetResults()
+{
+    tweetResults = [];
+}
+
+
 /*
  * findTweets
  * @params - searchfor (string, search term), latitude (float, search term),
