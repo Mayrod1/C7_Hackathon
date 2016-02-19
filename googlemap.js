@@ -53,13 +53,16 @@ function initMap(){
  * return: nothing, calls searches depending on toggles enabled
  * */
 function getLocation(text, coords, radius){
+    var lat = coords.latLng.lat();
+    var lon = coords.latLng.lng();
     //console.log(coords.latLng.lat(), coords.latLng.lng());
     //findCloseTweets(coords.latLng.lat(), coords.latLng.lng());
     if(tweetMode){
-        findTweets(text, coords.latLng.lat(), coords.latLng.lng(), radius);
+        findTweets(text, lat, lon, radius);
     }
     if(photoMode){
-        apiFlickr.radiusSearch(photocaller, text, [], coords.latLng.lng(), coords.latLng.lat(), 2);
+        console.log("flicr PArams: ", text, lat, lon);
+        apiFlickr.radiusSearch(photocaller, text, [], lon, lat, radius);
     }
 
 }
@@ -69,6 +72,7 @@ function getLocation(text, coords, radius){
  * return: nothing, stores photos in array
  * */
 function photocaller(response){
+    console.log("calling flicrapi: " ,response);
     for(var i in response){
         photos.push(response[i]);
     }
@@ -126,7 +130,7 @@ function setMark(tweet){
 function tweetArrayToMarker(tweets){
 
     for(var i in tweets){
-        var link = "http://www.google.com"//linkExtractor(tweets);
+        var link = "http://www.google.com"//linkExtractor(tweets.tweetText);
 
         tweets[i].link = link ? link: "";
 

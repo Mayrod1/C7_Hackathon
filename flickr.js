@@ -150,7 +150,7 @@ function ApiFlickr() {
      */
     function RadialData (searchText, dateRange, location) {
         FlickrData.call(this, searchText, dateRange);
-        this.long = location[0];
+        this.lon = location[0];
         this.lat = location[1];
         this.radius = location[2];
         this.radius_units = "mi";
