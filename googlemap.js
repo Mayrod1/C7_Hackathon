@@ -104,6 +104,18 @@ function tweetArrayToMarker(tweets){
         setMark(tweets[i])
     }
 }
+
+
+function findTweetLink(tweet){
+    for(var i in tweets) {
+        var url = tweets[i].match(/\b(http|https)?(:\/\/)?(\S*)\.(\w{2,4})\b/ig);
+        console.log(url);
+        return url;
+    }
+
+}
+
+
 /*
 * Function createTweets
 * params: none
