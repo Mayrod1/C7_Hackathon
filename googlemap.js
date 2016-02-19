@@ -96,11 +96,15 @@ function setMark(tweet){
             var marker = new google.maps.Marker({
                 position: pos,
                 //animation:google.maps.Animation.BOUNCE,
-                icon: icon
+                icon: icon,
+                labelClass: "label" //the CSS class for the label
             });
             //tweet name and info holder
             var infowindow = new google.maps.InfoWindow({
-                content: "<div class='tweets'><h2>" + tweet.screenName + "</h2><a href='"+ tweet.link +"'>Mystery Link</a><p>" + tweet.tweetText + "</p></div>"
+
+                content: "<h2>" + tweet.screenName + "</h2><a href='"+ find_tweet_URL(tweet.tweetText) +"'>instagram</a> <div" +
+                    " class='tweets'>" + tweet.tweetText + "</div>"
+
             });
             //set the market on monkey map
             marker.setMap(monkeyMap);
@@ -133,6 +137,11 @@ function tweetArrayToMarker(tweets){
         setMark(tweets[i])
     }
 }
+
+
+
+
+
 /**
  * Function: photoArrayToMarker
  * Params: tweet array
@@ -148,6 +157,7 @@ function photoArrayToMarker(photos){
  * params: a photo object with lat and long properties
  * return: nothing, applies markers to the map
  * */
+
 function setPhoto(photo){
     //create a point on google maps from photo data
     var pos = new google.maps.LatLng(photo.latitude, photo.longitude);
