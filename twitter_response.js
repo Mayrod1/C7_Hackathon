@@ -2,6 +2,9 @@
  * Created by Nick on 2/18/2016.
  */
 
+/*
+* simpleTweet - instead of storing whole tweets, stores relevant information extracted from tweet
+* */
 function simpleTweet(name, text, lat, long) {
     this.screenName = name;
     this.tweetText = text;
@@ -9,19 +12,22 @@ function simpleTweet(name, text, lat, long) {
     this.longitude = long;
 }
 
+/*
+* newTweetObj - uses closure to make distinct tweet object, intended to be put into tweetResults array
+* */
 function newTweetObj(name, text, lat, long)
 {
     var tweetObj = new simpleTweet(name, text, lat, long);
     return tweetObj;
 }
 
-var results = [];
+var tweetResults = [];
 /*
  * findTweets
  * @params - searchfor (string, search term), latitude (float, search term),
  *   longitude (float, search term), rad (float, search term)
  *
- *
+ *  finds tweets WITH geotags that mention searchFor, near the given location
  *
  * */
 function findTweets(searchFor, latitude, longitude, rad){
@@ -42,7 +48,7 @@ function findTweets(searchFor, latitude, longitude, rad){
             console.log("response.tweets.statuses: ", response.tweets.statuses);
             for (var i = 0; i < response.tweets.statuses.length; i++) {
                 if (response.tweets.statuses[i].geo != null){
-                    results.push(
+                    tweetResults.push(
                         newTweetObj(
                             response.tweets.statuses[i].user.screen_name,
                             response.tweets.statuses[i].text,
@@ -52,7 +58,7 @@ function findTweets(searchFor, latitude, longitude, rad){
                     );
                 }
             }
-            return results;
+            return tweetResults;
         },
         error: function(response){
             console.log("response: ", response);
