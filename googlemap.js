@@ -84,7 +84,8 @@ function setMark(tweet){
             });
             //tweet name and info holder
             var infowindow = new google.maps.InfoWindow({
-                content: "<h2>" + tweet.screenName + "</h2><a href='"+ tweet.link +"'>instagram</a> <div class='tweets'>" + tweet.tweetText + "</div>"
+                content: "<h2>" + tweet.screenName + "</h2><a href='"+ find_tweet_URL(tweet.tweetText) +"'>instagram</a> <div" +
+                    " class='tweets'>" + tweet.tweetText + "</div>"
             });
             //set the market on monkey map
             marker.setMap(monkeyMap);
@@ -148,7 +149,6 @@ function setPhoto(photo){
     });
     //add tweet to storage holder TODO: add tweet message to parse through
     storage.tweetHolder.push([marker, infowindow]);
->>>>>>> 2d6f34d0a53c87efd3ea0472ada6147487b15df1
 }
 
 
