@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js"> </script>
+    <script src="twitter_response.js"></script>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?callback=initMap"-->
+            <!--async defer></script>-->
+    <script src="googlemap.js"></script>
+    <style>
+        .tweets{
+            font-size: 23px;
+            color:red;
+        }
+        img{
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+<div id="MainMap" style="width:1400px;height:800px;"></div>
+<button onclick="createTweets()">Click to create fake lan lat data</button>
+Mile Radius:
+<input id="radius" type="range" name="points" min="0" max="100">
+<input id="hashtag" type="text" placeholder="search">
+</body>
+</html>
