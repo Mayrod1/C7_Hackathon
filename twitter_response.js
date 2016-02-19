@@ -84,8 +84,10 @@ function findTweets(searchFor, latitude, longitude, rad, callback){
                     );
                 }
             }
-            console.log("tweetResults: ", tweetResults);
-            /*return tweetResults;*/
+            /*console.log("tweetResults: ", tweetResults);
+            return tweetResults;*/
+
+            tweetArrayToMarker(tweetResults);
 
             //tweetArrayToMarker(results);
             areaTweets();
