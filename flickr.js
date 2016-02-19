@@ -127,6 +127,7 @@ function ApiFlickr() {
         this.has_geo = 1;
         this.per_page = 100;
         this.content_type = 1;
+        this.extras = "geo";
     }
 
     /**
