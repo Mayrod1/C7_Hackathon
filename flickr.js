@@ -98,7 +98,7 @@ function ApiFlickr() {
             dataType: "JSON",
             data: dataObject,
             success: function (response) {
-                callback(response);
+                callback(response.photos.photo);
             },
             fail: function (response) {
                 callback(response);
@@ -127,7 +127,7 @@ function ApiFlickr() {
         this.has_geo = 1;
         this.per_page = 100;
         this.content_type = 1;
-        this.extras = "geo";
+        this.extras = "geo,url_sq,url_t,url_s,url_q,url_m,url_n,url_z,url_c,url_l,url_o";
     }
 
     /**
