@@ -104,6 +104,7 @@ function setMark(tweet){
                 content: "<h2>" + tweet.screenName + "</h2><a href='"+ find_tweet_URL(tweet.tweetText) +"'>instagram</a> <div" +
                     " class='tweets'>" + tweet.tweetText + "</div>"
 
+            });
             //set the market on monkey map
             marker.setMap(monkeyMap);
             // open the info window
@@ -135,6 +136,8 @@ function tweetArrayToMarker(tweets){
         setMark(tweets[i])
     }
 }
+
+
 
 
 
