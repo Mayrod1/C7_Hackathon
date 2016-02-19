@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+     <script src="https://code.jquery.com/jquery.min.js"></script>
+<!--     <script>
+        $.ajax({
+            dataType: "JSON",
+            api_key: "LEARNING",
+            method: "GET",
+            url: "http://s-apis.learningfuze.com/hackathon/twitter/index.php",
+            data: {search_term: "dog"},
+            success: function(response){
+                console.log("response: ", response);
+                console.log("response.tweets.statuses: ", response.tweets.statuses);
+                for (var i = 0; i < response.tweets.statuses.length; i++) {
+                    $("body").append(
+                        $("<p>", {text: response.tweets.statuses[i].text})
+                );
+            }
+        },
+            error: function(response){
+                console.log("response: ", response);
+            }
+        });
+    </script>-->
+    <script src="twitter_response.js"></script>
+</head>
+<body>
+<button id='' onclick="">event</button>
+<div id="div1">
+
+</div>
+</body>
+</html>
