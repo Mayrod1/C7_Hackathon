@@ -15,7 +15,7 @@ function newTweetObj(name, text, lat, long)
     return tweetObj;
 }
 
-var results = [];
+
 /*
  * findTweets
  * @params - searchfor (string, search term), latitude (float, search term),
@@ -26,7 +26,7 @@ var results = [];
  * */
 function findTweets(searchFor, latitude, longitude, rad){
     console.log('shere');
-
+    var results = [];
     $.ajax({
         dataType: "JSON",
         api_key: "LEARNING",
@@ -52,7 +52,7 @@ function findTweets(searchFor, latitude, longitude, rad){
                     );
                 }
             }
-            return results;
+            slowCount(results);
         },
         error: function(response){
             console.log("response: ", response);
