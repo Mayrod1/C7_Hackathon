@@ -46,6 +46,44 @@ function ApiFlickr() {
         var dataObject = new BoundingBoxData(searchString, timePeriod, [minLongitude, minLatitude, maxLongitude, maxLatitude]);
         flickrPhotoSearch(dataObject, callback);
     };
+
+    /**
+     * getImageUrl - Returns the static url for the given image.  If a size is also given, image url returned is that size.
+     * @param {Object} photoObject - Object containing a single image object.
+     * @param {string|number} size - Character suffix for determining size of image in returned object. See https://www.flickr.com/services/api/misc.urls.html for list of suffixes.
+     *  If a number is used, the size of the image is taken so that the largest dimension is at least that number of pixels.
+     * @returns {string}
+     */
+    this.getImageUrl = function(photoObject, size){
+        var photoUrl = "https://farm" + photoObject.farm + ".staticflickr.com/" + photoObject.server + "/" + photoObject.id + "_" + photoObject.secret;
+        if (typeof size == "string") {
+            photoUrl += "_" + size;
+        } else if (typeof size == "number") {
+            if (size <= 75) {
+                photoUrl += "_s";
+            } else if (size <= 150) {
+                photoUrl += "_q";
+            } else if (size <= 240) {
+                photoUrl += "_m";
+            } else if (size <= 320) {
+                photoUrl += "_n";
+            } else if (size <= 500) {
+                photoUrl += "_-";
+            } else if (size <= 640) {
+                photoUrl += "_z";
+            } else if (size <= 800) {
+                photoUrl += "_c";
+            } else if (size <= 1024) {
+                photoUrl += "_b";
+            } else if (size <= 1600) {
+                photoUrl += "_h";
+            } else if (size <= 2048) {
+                photoUrl += "_k";
+            }
+        }
+        photoUrl += ".jpg";
+        return photoUrl;
+    };
     //  End public interface methods
 
     /**
@@ -66,21 +104,6 @@ function ApiFlickr() {
                 callback(response);
             }
         });
-    }
-
-    /**
-     * getImageUrl - Returns the static url for the given image.  If a size is also given, image url returned is that size.
-     * @param {Object} photoObject - Object containing a single image object.
-     * @param {string} size - Character suffix for determining size of image in returned object. See https://www.flickr.com/services/api/misc.urls.html for list of suffixes.
-     * @returns {string}
-     */
-    function getImageUrl(photoObject, size) {
-        var photoUrl = "https://farm" + photoObject.farm + ".staticflickr.com/" + photoObject.server + "/" + photoObject.id + "_" + photoObject.secret;
-        if (typeof size == "string") {
-            photoUrl += "_" + size;
-        }
-        photoUrl += ".jpg";
-        return photoUrl;
     }
 
     /**
@@ -143,5 +166,6 @@ function ApiFlickr() {
     function BoundingBoxData (searchText, dateRange, location) {
         FlickrData.call(this, searchText, dateRange);
         this.bbox = location.join(",");
+        this.sort = "relevance";
     }
 }
