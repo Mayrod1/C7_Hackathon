@@ -4,6 +4,26 @@
     <title>What's Popular Where</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="main.js"></script>
+
+    <script>
+        if (navigator.geolocation) {
+            console.log('Geolocation is supported!');
+        } else {
+            console.log('Geolocation is not supported for this Browser/OS version yet.')
+        }
+
+        //Requests position and calls the show_position function when the user agrees to share location.
+
+        navigator.geolocation.getCurrentPosition(show_position);
+
+        //Function that performs the work of getting the actual user coordinates.
+        function show_position(position){
+            var lat = position.coords.latitude;
+            var longi = position.coords.longitude;
+        }
+
+    </script>
+
 </head>
 <body>
 
@@ -64,6 +84,8 @@
                 </div>
             </div>
         </div>
+
+
 
 </body>
 </html>
