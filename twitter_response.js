@@ -81,7 +81,7 @@ function findTweets(searchFor, latitude, longitude, rad){
             /*console.log("tweetResults: ", tweetResults);
             return tweetResults;*/
 
-            tweetArrayToMarker(results);
+            tweetArrayToMarker(tweetResults);
 
         },
         error: function(response){
