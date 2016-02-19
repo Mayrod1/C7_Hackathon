@@ -6,26 +6,64 @@ var apiFlickr = new ApiFlickr();
  */
 function ApiFlickr() {
 
-    this.radiusSearch = function(searchString, timePeriod, longitude, latitude, radiusInMiles){
-        var dataObject = new RadialData(searchString, timePeriod, [longitude, latitude, radiusInMiles]);
-
+    //  Begin public interface methods
+    /**
+     * unlocalizedSearch - Method used for performing searches without specifying location.
+     * @param {Function} callback - A one-parameter function to call with the response from the server.
+     * @param {string} searchString - String used to search image titles, descriptions, and keywords.
+     * @param {Date[]|string[]} timePeriod - Filter by range of dates. One date implies minimum date to current. Empty array ignores dates.
+     */
+    this.unlocalizedSearch = function (callback, searchString, timePeriod) {
+        var dataObject = new UnlocalizedData(searchString, timePeriod);
+        flickrPhotoSearch(dataObject, callback);
     };
+
+    /**
+     * radiusSearch - Method used for performing searches which return the closest results to a given location.
+     * @param {Function} callback - A one-parameter function to call with the response from the server.
+     * @param {string} searchString - String used to search image titles, descriptions, and keywords.
+     * @param {Date[]|string[]} timePeriod - Filter by range of dates. One date implies minimum date to current. Empty array ignores dates.
+     * @param {number} longitude - Longitude of location to search around.
+     * @param {number} latitude - Latitude of location to search around.
+     * @param {number} radiusInMiles - Maximum radius to include in search.
+     */
+    this.radiusSearch = function(callback, searchString, timePeriod, longitude, latitude, radiusInMiles){
+        var dataObject = new RadialData(searchString, timePeriod, [longitude, latitude, radiusInMiles]);
+        flickrPhotoSearch(dataObject, callback);
+    };
+
+    /**
+     * boundingBoxSearch - Method used for performing searches limited by the given location window.
+     * @param {Function} callback - A one-parameter function to call with the response from the server.
+     * @param {string} searchString - String used to search image titles, descriptions, and keywords.
+     * @param {Date[]|string[]} timePeriod - Filter by range of dates. One date implies minimum date to current. Empty array ignores dates.
+     * @param {number} minLongitude - Minimum longitude to include.
+     * @param {number} minLatitude - Minimum latitude to include.
+     * @param {number} maxLongitude - Maximum longitude to include.
+     * @param {number} maxLatitude - Maximum latitude to include.
+     */
+    this.boundingBoxSearch = function(callback, searchString, timePeriod, minLongitude, minLatitude, maxLongitude, maxLatitude){
+        var dataObject = new BoundingBoxData(searchString, timePeriod, [minLongitude, minLatitude, maxLongitude, maxLatitude]);
+        flickrPhotoSearch(dataObject, callback);
+    };
+    //  End public interface methods
 
     /**
      * flickrPhotoSearch - Private method for initiating AJAX calls to Flickr API, modified to include the static url.
      * @param {Object} dataObject - Object containing all data keys to be passed to Flickr API.
+     * @param {Function} callback - A one-parameter function to call with the response from the server.
      */
-    function flickrPhotoSearch(dataObject) {
+    function flickrPhotoSearch(dataObject, callback) {
         $.ajax({
             url: "https://api.flickr.com/services/rest",
             method: "POST",
             dataType: "JSON",
             data: dataObject,
             success: function (response) {
-                return response;
+                callback(response);
             },
             fail: function (response) {
-                return response;
+                callback(response);
             }
         });
     }
