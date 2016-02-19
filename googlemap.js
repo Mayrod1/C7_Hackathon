@@ -101,7 +101,8 @@ function setMark(tweet){
             var marker = new google.maps.Marker({
                 position: pos,
                 //animation:google.maps.Animation.BOUNCE,
-                icon: icon
+                icon: icon,
+                labelClass: "label" //the CSS class for the label
             });
 
             //var btn = $("<div>", {
@@ -156,6 +157,11 @@ function tweetArrayToMarker(tweets){
         setMark(tweets[i])
     }
 }
+
+
+
+
+
 /**
  * Function: photoArrayToMarker
  * Params: tweet array
@@ -171,6 +177,7 @@ function photoArrayToMarker(photos){
  * params: a photo object with lat and long properties
  * return: nothing, applies markers to the map
  * */
+
 function setPhoto(photo){
     //create a point on google maps from photo data
     var pos = new google.maps.LatLng(photo.latitude, photo.longitude);
