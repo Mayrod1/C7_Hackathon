@@ -115,7 +115,7 @@ function setMark(tweet){
             //tweet name and info holder
             var infowindow = new google.maps.InfoWindow({
                 content: "<div class='tweets'><h2>" + tweet.screenName +
-                "</h2><a href='"+ tweet.link +"'>Mystery Link</a><p>" + tweet.tweetText +
+                "</h2><a href='"+ tweet.link +"' target='_blank'>Mystery Link</a><p>" + tweet.tweetText +
                 "</p></div>"
             });
             //set the market on monkey map
@@ -150,7 +150,7 @@ function tweetBtn(tweet){
 function tweetArrayToMarker(tweets){
 
     for(var i in tweets){
-        var link = "http://www.google.com"//linkExtractor(tweets.tweetText);
+        var link = find_tweet_URL(tweets[i].tweetText);
 
         tweets[i].link = link ? link: "";
 
@@ -275,14 +275,4 @@ function findCloseTweets(x, y){
     setMark(coord);
 }
 
-function modalActive(mode){ //no returns, utility
-    var modal = $("#" + mode); //jquery method to check if hidden
-    if ( modal.is( ":hidden" ) ) {
-        // pointing to a jquery selector in a variable modal previously declared
-        modal.css( "display", "block" );
-    }
-    else{
-        // pointing to a jquery selector in a variable modal previously declared
-        modal.css( "display", "none");
-    }
-}
+
