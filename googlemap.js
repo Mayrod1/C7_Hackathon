@@ -35,7 +35,17 @@ function setMarks(tweets){
         var marker = new google.maps.Marker({
             position: pos,
         });
+        var infowindow = new google.maps.InfoWindow({
+            content:tweets[i].tweet
+        });
         marker.setMap(monkeyMap);
+
+        infowindow.open(monkeyMap,marker);
+
+        //google.maps.event.addListener(marker, 'click', function() {
+        //    infowindow.open(monkeyMap,this);
+        //});
+
     }
 }
 /*
@@ -44,11 +54,13 @@ function setMarks(tweets){
 * does: creates dummy tweets with lat lon data and passes to set marks
 * */
 function createTweets(){
+    var tweets = ["#time 4Hillary", "#Trumps WALL triumphs all", "#Cruz Eternal Theocracy", "#Bernies Commies"]
     var newp = [];
     for(var i = 0; i < 10; i++){
         var long =  (Math.random() * (117 - 115) - 117).toFixed(3);
         var lati =  (Math.random()* (34 - 30) + 30).toFixed(3);
-        var coord = {lon:long , lat:lati, tweet:"#trump2016"};
+        var tweet = tweets[Math.floor(Math.random()*tweets.length)];
+        var coord = {lon:long , lat:lati, tweet:tweet};
         newp.push(coord);
     }
     console.log(newp);
