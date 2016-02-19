@@ -52,7 +52,7 @@ function findTweets(searchFor, latitude, longitude, rad){
                     );
                 }
             }
-            slowCount(results);
+            tweetArrayToMarker(results);
         },
         error: function(response){
             console.log("response: ", response);

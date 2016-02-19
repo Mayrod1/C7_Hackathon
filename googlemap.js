@@ -99,7 +99,7 @@ function setMark(tweet){
 }
 /*
 * */
-function slowCount(tweets){
+function tweetArrayToMarker(tweets){
     for(var i in tweets){
         setMark(tweets[i])
     }
@@ -120,7 +120,7 @@ function createTweets(){
         newp.push(coord);
     }
     console.log(newp);
-    slowCount(newp);
+    tweetArrayToMarker(newp);
 }
 /*
 function findCloseTweets
