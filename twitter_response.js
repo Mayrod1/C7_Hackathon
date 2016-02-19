@@ -41,6 +41,12 @@ function resetTweetResults()
 }
 
 /*
+*
+*
+* */
+
+
+/*
  * findTweets
  * @params - searchfor (string, search term), latitude (float, search term),
  *   longitude (float, search term), rad (float, search term)
@@ -108,12 +114,10 @@ function areaTweets(searchFor, startLat, startLong, endLat, endLong)
     {
         areaTemp = [searchFor, startLat, startLong, endLat, endLong];
 
-        console.log("multi call: ", tweetResults);
         findTweets(searchFor, startLat, startLong, 69);
         return;
     }
 
-    console.log("first call: ", tweetResults);
     areaTemp[1]++;
     areaTemp[2]++;
     if ( (areaTemp[1] < areaTemp[3]) )//|| (areaTemp[2] > areaTemp[4]) )
@@ -125,9 +129,16 @@ function areaTweets(searchFor, startLat, startLong, endLat, endLong)
 
 $(document).ready(function () {
     // dummy data
-    //findTweets("", 33.6694, -117.8231, 50);
+    findTweets("", 33.6694, -117.8231, 50);
+    findTweets("", 34.6694, -117.8231, 50);
+    findTweets("", 35.6694, -117.8231, 50);
+    findTweets("", 36.6694, -117.8231, 50);
+    findTweets("", 37.6694, -117.8231, 50);
+    findTweets("", 38.6694, -117.8231, 50);
+    findTweets("", 39.6694, -117.8231, 50);
+    findTweets("", 40.6694, -117.8231, 50);
     //console.log("single call: ", tweetResults);
-    areaTweets("", 23, -124, 48, -68);
+    //areaTweets("", 23, -124, 48, -68);
     //console.log("multi call: ", tweetResults);
 
     $('button').click(function() {
