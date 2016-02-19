@@ -6,8 +6,10 @@
  * simpleTweet - instead of storing whole tweets, stores relevant information extracted from tweet
  * */
 
-function simpleTweet(name, text, lat, long) {
-    this.screenName = name;
+function simpleTweet(uName, sName, pic, text, lat, long) {
+    this.userName = uName;
+    this.screenName = sName;
+    this.profile = pic;
     this.tweetText = text;
     this.latitude = lat;
     this.longitude = long;
@@ -16,9 +18,9 @@ function simpleTweet(name, text, lat, long) {
 /*
  * newTweetObj - uses closure to make distinct tweet object, intended to be put into tweetResults array
  * */
-function newTweetObj(name, text, lat, long)
+function newTweetObj(uName, sName, pic, text, lat, long)
 {
-    var tweetObj = new simpleTweet(name, text, lat, long);
+    var tweetObj = new simpleTweet(uName, sName, pic, text, lat, long);
     return tweetObj;
 }
 
@@ -66,7 +68,9 @@ function findTweets(searchFor, latitude, longitude, rad){
                 if (response.tweets.statuses[i].geo != null){
                     tweetResults.push(
                         newTweetObj(
+                            response.tweets.statuses[i].user.name,
                             response.tweets.statuses[i].user.screen_name,
+                            response.tweets.statuses[i].user.profile_image_url,
                             response.tweets.statuses[i].text,
                             response.tweets.statuses[i].geo.coordinates[0],
                             response.tweets.statuses[i].geo.coordinates[1]
@@ -83,17 +87,34 @@ function findTweets(searchFor, latitude, longitude, rad){
     });
 }
 
+/*
+ * globalTweets
+ * @params - searchfor (string, search term), latitude (float, search term),
+ *   longitude (float, search term), rad (float, search term)
+ *
+ *  finds tweets WITH geotags that mention searchFor, near the given location
+ *
+ * */
+
+
 
 $(document).ready(function () {
-    findTweets("", 33.6694, -117.8231, 50);
+    findTweets("ground", 33.6694, -117.8231, 50);
 
     $('button').click(function() {
         for (var i = 0; i < tweetResults.length; i++) {
-            $('body').append('<p>', {text: i});
-            /*$('.div1').append(tweetResults[i].screenName);
-             $('.div1').append(tweetResults[i].tweetText);
-             $('.div1').append(tweetResults[i].latitude);
-             $('.div1').append(tweetResults[i].longitude);*/
+            console.log("uName: ", tweetResults[i].userName);
+            $('#div1').append('<h3>', {html: tweetResults[i].userName});
+            console.log("sName: ", tweetResults[i].screenName);
+            $('#div1').append('<h4>', {html: tweetResults[i].screenName});
+            console.log("profile: ", tweetResults[i].profile);
+            $('#div1').append('<img>', {src: tweetResults[i].profile});
+            console.log("tweetText: ", tweetResults[i].tweetText);
+            $('#div1').append('<p>', {text: tweetResults[i].tweetText + ' '});
+            console.log("latitude: ", tweetResults[i].latitude);
+            $('#div1').append('<p>', {text: tweetResults[i].latitude + ' '});
+            console.log("longitude: ", tweetResults[i].longitude);
+            $('#div1').append('<p>', {text: tweetResults[i].longitude + ' '});
 
             console.log(i);
         }
