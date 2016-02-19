@@ -100,7 +100,7 @@ function setMark(tweet){
             });
             //tweet name and info holder
             var infowindow = new google.maps.InfoWindow({
-                content: "<h2>" + tweet.screenName + "</h2><a href='"+ tweet.link +"'>instagram</a> <div class='flickrphoto'>" + tweet.tweetText + "</div>"
+                content: "<div class='tweets'><h2>" + tweet.screenName + "</h2><a href='"+ tweet.link +"'>Mystery Link</a><p>" + tweet.tweetText + "</p></div>"
             });
             //set the market on monkey map
             marker.setMap(monkeyMap);
@@ -124,7 +124,12 @@ function setMark(tweet){
  * runs through tweet array and sends them to be marked
 * */
 function tweetArrayToMarker(tweets){
+
     for(var i in tweets){
+        var link = "http://www.google.com"//linkExtractor(tweets);
+
+        tweets[i].link = link ? link: "";
+
         setMark(tweets[i])
     }
 }
@@ -161,7 +166,7 @@ function setPhoto(photo){
     });
     //photo title and image holder
     var infowindow = new google.maps.InfoWindow({
-        content: "<h2>" + photo.title + "</h2> <div class='photos'><img src='" + apiFlickr.getImageUrl(photo,0) + "'></div>"
+        content: "<div class='flickrphoto'><h2>" + photo.title + "</h2> <img src='" + apiFlickr.getImageUrl(photo,0) + "'></div>"
     });
     //set the market on monkey map
     marker.setMap(monkeyMap);
