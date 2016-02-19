@@ -100,7 +100,7 @@ function setMark(tweet){
             });
             //tweet name and info holder
             var infowindow = new google.maps.InfoWindow({
-                content: "<h2>" + tweet.screenName + "</h2><a href='"+ tweet.link +"'>instagram</a> <div class='tweets'>" + tweet.tweetText + "</div>"
+                content: "<h2>" + tweet.screenName + "</h2><a href='"+ tweet.link +"'>instagram</a> <div class='flickrphoto'>" + tweet.tweetText + "</div>"
             });
             //set the market on monkey map
             marker.setMap(monkeyMap);
