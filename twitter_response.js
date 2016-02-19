@@ -50,7 +50,7 @@ function resetTweetResults()
  * */
 function findTweets(searchFor, latitude, longitude, rad){
     console.log('shere');
-
+    var results = [];
     $.ajax({
         dataType: "JSON",
         api_key: "LEARNING",
@@ -78,8 +78,11 @@ function findTweets(searchFor, latitude, longitude, rad){
                     );
                 }
             }
-            console.log("tweetResults: ", tweetResults);
-            return tweetResults;
+            /*console.log("tweetResults: ", tweetResults);
+            return tweetResults;*/
+
+            tweetArrayToMarker(results);
+
         },
         error: function(response){
             console.log("response: ", response);
@@ -99,25 +102,21 @@ function findTweets(searchFor, latitude, longitude, rad){
 
 
 $(document).ready(function () {
+    /*
+    // dummy data
     findTweets("ground", 33.6694, -117.8231, 50);
 
     $('button').click(function() {
         for (var i = 0; i < tweetResults.length; i++) {
             console.log("uName: ", tweetResults[i].userName);
-            $('#div1').append('<h3>', {html: tweetResults[i].userName});
             console.log("sName: ", tweetResults[i].screenName);
-            $('#div1').append('<h4>', {html: tweetResults[i].screenName});
             console.log("profile: ", tweetResults[i].profile);
-            $('#div1').append('<img>', {src: tweetResults[i].profile});
             console.log("tweetText: ", tweetResults[i].tweetText);
-            $('#div1').append('<p>', {text: tweetResults[i].tweetText + ' '});
             console.log("latitude: ", tweetResults[i].latitude);
-            $('#div1').append('<p>', {text: tweetResults[i].latitude + ' '});
             console.log("longitude: ", tweetResults[i].longitude);
-            $('#div1').append('<p>', {text: tweetResults[i].longitude + ' '});
 
             console.log(i);
         }
-    });
+    });*/
 
 });
