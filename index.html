@@ -4,8 +4,11 @@
     <title>What's Popular Where</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js"> </script>
+    <script src="twitter_response.js"></script>
     <script src="flickr.js"></script>
     <script src="main.js"></script>
+<<<<<<< HEAD
     <script src="http://maps.googleapis.com/maps/api/js"> </script>
     <script src="twitter_response.js"></script>
     <script src="googlemap.js"></script>
@@ -29,6 +32,9 @@
 
     </script>
 
+=======
+    <script src="googlemap.js"></script>
+>>>>>>> e03d9f7bc952a8b8a909d63e3be93886ba273658
 </head>
 <body>
 
@@ -36,37 +42,28 @@
     <div id="header-container">
         <header>
             <h1>Popular Tweets by Location</h1>
-            <ul>
-                <li><a href="about.html">About</a></li>   <!-- links to about page!-->
-            </ul>
+            <div>
+                <p><a href="about.html">About</a></p>   <!-- links to about page!-->
+            </div>
         </header>
         </div>
 
         <!--MAP AND GEOLOCATION DISPLAY/DATA-->
-    <div class="map-data" id="main-map">
+
+    <div class="map-data" id="MainMap">
 
     </div>
 
         <!--SEARCH FOR TWEETS AND OTHER DATA DISPLAYED-->
         <aside class="search-container">
-            <form action="#">
-                <input type="search" name="search"/>
-                <input type="submit" value="search"/>
-            </form>
+            Mile Radius:
+            <input id="radius" type="range" name="points" min="0" max="100">
+            <input id="hashtag" type="text" placeholder="search">
 
 
-            <!--DIV FOR SEARCHING FOR THE TYPE OF TWEET-->
+            <!--DIV FOR SEARCHING TWEETS-->
             <div id="search-type">
 
-            </div>
-            <!--DIV FOR A LIST OF TWEETS SEARCHED/TRENDING-->
-            <div id="tweet-list">
-                <!--Data List (tweets)-->
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
             </div>
 
 
