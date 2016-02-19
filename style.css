@@ -5,7 +5,22 @@ header{
 
 aside{
     border: dashed pink 2px;
-    height: 75vh;
+    height: 90vh;
     width: 15vw;
     float: right;
+}
+#MainMap{
+    height: 90vh;
+    width: 81vw;
+    display: inline-block;
+    top:30%;
+    border:3px solid blue;
+}
+.tweets{
+    font-size: 23px;
+    color:red;
+}
+img{
+    width: 45px;
+    height: 50px;
 }

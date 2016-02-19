@@ -4,6 +4,7 @@ google.maps.event.addDomListener(window, 'load', initMap);
 
 //initializes google map
 var monkeyMap;
+var photos = [];
 var cycling = true;
 var storage = {
     index: 0,
@@ -50,11 +51,15 @@ function getLocation(text, coords, radius){
     console.log(coords.latLng.lat(), coords.latLng.lng());
     //findCloseTweets(coords.latLng.lat(), coords.latLng.lng());
     findTweets(text, coords.latLng.lat(), coords.latLng.lng(), radius);
+    apiFlickr.radiusSearch(photocaller, text, [], coords.latLng.lng(), coords.latLng.lat(), 50);
     //return coords.latLng.lat(), coords.latLng.lng();
 }
 
+function photocaller(a){
+     photos.push(a);
+}
 
-
+//apiFlickr.unlocalizedSearch(function(a){ b = apiFlickr.getImageUrl(a.photos.photo[9], 200)}, "cat", [])
 /*
 * function setMarks
 * params: an array of tweets with lat and long properties
@@ -66,8 +71,8 @@ function setMark(tweet){
             var pos = new google.maps.LatLng(tweet.latitude, tweet.longitude);
             //change the icon picture and scale of the map marker pin
             var icon = {
-                //url: tweet.icon,
-                scaledSize: new google.maps.Size(50, 50), // scaled size
+                url: "images/tweet.png",
+                scaledSize: new google.maps.Size(25, 25), // scaled size
                 origin: new google.maps.Point(0, 0), // origin
                 anchor: new google.maps.Point(0, 0) // anchor
             };
@@ -75,11 +80,11 @@ function setMark(tweet){
             var marker = new google.maps.Marker({
                 position: pos,
                 //animation:google.maps.Animation.BOUNCE,
-                //icon: icon
+                icon: icon
             });
             //tweet name and info holder
             var infowindow = new google.maps.InfoWindow({
-                content: "<h2>" + tweet.screenName + "</h2><div class='tweets'>" + tweet.tweetText + "</div>"
+                content: "<h2>" + tweet.screenName + "</h2><a href='"+ tweet.link +"'>instagram</a> <div class='tweets'>" + tweet.tweetText + "</div>"
             });
             //set the market on monkey map
             marker.setMap(monkeyMap);
@@ -101,18 +106,49 @@ function setMark(tweet){
 * */
 function tweetArrayToMarker(tweets){
     for(var i in tweets){
+
         setMark(tweets[i])
     }
 }
 
 
-function findTweetLink(tweet){
-    for(var i in tweets) {
-        var url = tweets[i].match(/\b(http|https)?(:\/\/)?(\S*)\.(\w{2,4})\b/ig);
-        console.log(url);
-        return url;
-    }
 
+function setPhoto(photo){
+    //create a point on google maps from tweet data
+    var pos = new google.maps.LatLng(photo.latitude, photo.longitude);
+    //change the icon picture and scale of the map marker pin
+    var icon = {
+        url: "images/tweet.png",
+        scaledSize: new google.maps.Size(25, 25), // scaled size
+        origin: new google.maps.Point(0, 0), // origin
+        anchor: new google.maps.Point(0, 0) // anchor
+    };
+    //position of maker and animation/icon setting
+    var marker = new google.maps.Marker({
+        position: pos,
+        //animation:google.maps.Animation.BOUNCE,
+        icon: icon
+    });
+    //tweet name and info holder
+    var infowindow = new google.maps.InfoWindow({
+        content: "<h2>" + photo.title + "</h2> <div class='tweets'>" + apiFlickr.getImageUrl(photo,0) + "</div>"
+    });
+    //set the market on monkey map
+    marker.setMap(monkeyMap);
+    // open the info window
+    infowindow.open(monkeyMap, marker);
+    //close the info window 0 - 2 seconds later
+    var time = setTimeout(function () {
+        infowindow.close(monkeyMap, marker);
+        clearTimeout(time);
+    }, Math.floor(Math.random() * 2000));
+    //add event listener to open text window again
+    google.maps.event.addListener(marker, 'click', function () {
+        infowindow.open(monkeyMap, this);
+    });
+    //add tweet to storage holder TODO: add tweet message to parse through
+    storage.tweetHolder.push([marker, infowindow]);
+>>>>>>> 2d6f34d0a53c87efd3ea0472ada6147487b15df1
 }
 
 
