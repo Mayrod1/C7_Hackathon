@@ -7,6 +7,7 @@ var apiFlickr = new ApiFlickr();
 function ApiFlickr() {
 
     this.radiusSearch = function(searchString, timePeriod, longitude, latitude, radiusInMiles){
+        var dataObject = new RadialData(searchString, timePeriod, [longitude, latitude, radiusInMiles]);
 
     };
 
@@ -51,6 +52,10 @@ function ApiFlickr() {
      * @constructor
      */
     function FlickrData(searchText, dateRange) {
+        this.method = "flickr.photos.search";
+        this.api_key =  "4291af049e7b51ff411bc39565109ce6";
+        this.format = "json";
+        this.nojsoncallback = 1;
         this.text = searchText;
         if (Array.isArray(dateRange) && dateRange.length >= 1) {
             this.min_taken_date = dateRange[0];
