@@ -33,7 +33,7 @@ function getLocation(coords){
 * */
 function setMarks(tweets){
     for(var i in tweets){
-        var pos = new google.maps.LatLng(tweets[i].lat, tweets[i].lon);
+        var pos = new google.maps.LatLng(tweets[i].latitude, tweets[i].longitude);
 
         var icon = {
             url: tweets[i].icon, // url
@@ -48,7 +48,7 @@ function setMarks(tweets){
             icon: icon
         });
         var infowindow = new google.maps.InfoWindow({
-            content: "<h2>TRUMP</h2><div class='tweets'>" +  tweets[i].tweet +"</div>"
+            content: "<h2>" + tweets[i].screenName + "</h2><div class='tweets'>" +  tweets[i].tweetText +"</div>"
         });
         marker.setMap(monkeyMap);
 
@@ -74,14 +74,18 @@ function createTweets(){
     for(var i = 0; i < 1; i++){
         var long =  (Math.random() * (122 - 90) - 122).toFixed(3);
         var lati =  (Math.random()* (45 - 32) + 32).toFixed(3);
-        var tweet = tweets[Math.floor(Math.random()*tweets.length)];
-        var coord = {lon:long , lat:lati, tweet:tweet};
+        var tweet = tweets[Math.floor(Math.random() * tweets.length)];
+        var coord = {longitude:long , latitude:lati, tweetText:tweet, screenName:"HillaTump"};
         newp.push(coord);
     }
     console.log(newp);
     setMarks(newp);
 }
-
+/*
+function findCloseTweets
+params: long and latitude floats
+does: creates dummy tweets that within range of given coordinates
+* */
 function findCloseTweets(x, y){
     maxX = x + 1;
     minX = x - 1;
@@ -94,7 +98,7 @@ function findCloseTweets(x, y){
     var long =  (Math.random()* (minY - maxY) + minY).toFixed(3);
     var person = politico[Math.floor(Math.random()* politico.length)];
     var tweet = person.tweet[Math.floor(Math.random()*tweets.length)];
-    var coord = {lon:long , lat:lati, icon: person.pic, tweet:tweet};
+    var coord = {longitude:long , latitude:lati, screenName:"HillaTump", icon: person.pic, tweetText:tweet};
     console.log(coord.lat,coord.lon);
     newp.push(coord);
 
