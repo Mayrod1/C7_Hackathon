@@ -1,26 +1,42 @@
+body{
+    position: relative;
+
+}
 header{
-    border: solid black 1px;
     text-align: center;
+    font-family: Arial Verdana, sans-serif;
 }
 
 aside{
-    border: dashed pink 2px;
     height: 90vh;
     width: 15vw;
     float: right;
+    top: 35px;
+    position: relative;
+
 }
 #MainMap{
     height: 90vh;
     width: 81vw;
     display: inline-block;
     top:30%;
-    border:3px solid blue;
+    border:1px solid blue;
+    border-radius: 20px;
 }
 .tweets{
-    font-size: 23px;
+    font-size: 20px;
     color:red;
 }
 img{
-    width: 45px;
+    width: 50px;
     height: 50px;
+}
+input{
+    font-size: 120%;
+    border-radius: 5px;
+
+}
+.label{
+    background-color: white;
+    border: 1px solid black;
 }

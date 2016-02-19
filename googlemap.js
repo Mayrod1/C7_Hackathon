@@ -96,7 +96,8 @@ function setMark(tweet){
             var marker = new google.maps.Marker({
                 position: pos,
                 //animation:google.maps.Animation.BOUNCE,
-                icon: icon
+                icon: icon,
+                labelClass: "label" //the CSS class for the label
             });
             //tweet name and info holder
             var infowindow = new google.maps.InfoWindow({
