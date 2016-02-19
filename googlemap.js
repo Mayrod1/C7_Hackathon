@@ -35,7 +35,7 @@ var learningFuze = new google.maps.LatLng(33.64,-117.75);
 function initMap(){
     var mapProp = {
         center: learningFuze,
-        zoom: 5,
+        zoom: 9,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     //creates our map on the ID with MainMap
@@ -159,9 +159,6 @@ function tweetArrayToMarker(tweets){
 }
 
 
-
-
-
 /**
  * Function: photoArrayToMarker
  * Params: tweet array
@@ -197,7 +194,8 @@ function setPhoto(photo){
     //photo title and image holder
     var infowindow = new google.maps.InfoWindow({
         content: "<div class='flickrphoto'><h2>" + photo.title +
-        "</h2> <img src='" + apiFlickr.getImageUrl(photo,0) + "'><img src='" + photo.url_m +"'></div>"
+        "</h2> <img src='" + apiFlickr.getImageUrl(photo,0) +
+        "'></div>"
     });
     //set the market on monkey map
     marker.setMap(monkeyMap);
@@ -207,12 +205,33 @@ function setPhoto(photo){
 
     //add event listener to open text window again
     google.maps.event.addListener(marker, 'click', function () {
+        display_photo(photo);
         infowindow.open(monkeyMap, this);
         console.log(photo);
     });
     //add photo to storage holder TODO: add tweet message to parse through
     storage.mapMarkerArray.push([marker, infowindow]);
 }
+
+function display_photo(photo){
+
+    var modal_element = $('#Modal');
+
+    var image = $('<img>',{
+        src: photo.url_m
+    });
+    var photoFrame = $('<div>',{
+        class: 'flickr',
+    });
+
+    photoFrame.append(image);
+    modal_element.find('.modal-body').html('').append(photoFrame);
+    modalActive("Modal");
+}
+
+$(".close").click(function(){
+    modalActive("Modal");
+})
 
 /**
 * Function createTweets
@@ -254,4 +273,16 @@ function findCloseTweets(x, y){
     //newp.push(coord);
 
     setMark(coord);
+}
+
+function modalActive(mode){ //no returns, utility
+    var modal = $("#" + mode); //jquery method to check if hidden
+    if ( modal.is( ":hidden" ) ) {
+        // pointing to a jquery selector in a variable modal previously declared
+        modal.css( "display", "block" );
+    }
+    else{
+        // pointing to a jquery selector in a variable modal previously declared
+        modal.css( "display", "none");
+    }
 }
