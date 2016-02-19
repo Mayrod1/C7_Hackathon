@@ -1,5 +1,9 @@
 var apiFlickr = new ApiFlickr();
 
+/**
+ * ApiFlickr - Constructs an object with interfacing with Flickr's API.
+ * @constructor
+ */
 function ApiFlickr() {
 
     /**
