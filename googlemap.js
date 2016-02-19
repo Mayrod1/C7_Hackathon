@@ -129,6 +129,7 @@ function setMark(tweet){
             //add event listener to open text window again
             google.maps.event.addListener(marker, 'click', function () {
                 infowindow.open(monkeyMap, this);
+                console.log(tweet);
             });
 
 
@@ -189,7 +190,7 @@ function setPhoto(photo){
     //photo title and image holder
     var infowindow = new google.maps.InfoWindow({
         content: "<div class='flickrphoto'><h2>" + photo.title +
-        "</h2> <img src='" + apiFlickr.getImageUrl(photo,0) + "'></div>"
+        "</h2> <img src='" + apiFlickr.getImageUrl(photo,0) + "'><img src='" + photo.url_m +"'></div>"
     });
     //set the market on monkey map
     marker.setMap(monkeyMap);
@@ -200,6 +201,7 @@ function setPhoto(photo){
     //add event listener to open text window again
     google.maps.event.addListener(marker, 'click', function () {
         infowindow.open(monkeyMap, this);
+        console.log(photo);
     });
     //add photo to storage holder TODO: add tweet message to parse through
     storage.mapMarkerArray.push([marker, infowindow]);
