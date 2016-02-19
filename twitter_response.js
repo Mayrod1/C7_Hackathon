@@ -15,18 +15,18 @@ function newTweetObj(name, text, lat, long)
     return tweetObj;
 }
 
+var results = [];
 /*
-* findTweets
-* @params - searchfor (string, search term), latitude (float, search term),
-*   longitude (float, search term), rad (float, search term)
-*
-*
-*
-* */
+ * findTweets
+ * @params - searchfor (string, search term), latitude (float, search term),
+ *   longitude (float, search term), rad (float, search term)
+ *
+ *
+ *
+ * */
 function findTweets(searchFor, latitude, longitude, rad){
     console.log('shere');
 
-    var results = [];
     $.ajax({
         dataType: "JSON",
         api_key: "LEARNING",
@@ -41,22 +41,18 @@ function findTweets(searchFor, latitude, longitude, rad){
             console.log("response: ", response);
             console.log("response.tweets.statuses: ", response.tweets.statuses);
             for (var i = 0; i < response.tweets.statuses.length; i++) {
-                $("body").append(
-                    $('<img>', {src: response.tweets.statuses[i].user.profile_image_url})
-                );
-
-                if (response.tweets.statuses[i].geo != null)
-                {
-                    $("body").append(
-                        $('<p>', {text: "found geo tag!"}) );
-                    $("body").append(
-                        $('<p>', {text: "lat! " + response.tweets.statuses[i].geo.coordinates[0]}) );
-                    $("body").append(
-                        $('<p>', {text: "long! " + response.tweets.statuses[i].geo.coordinates[1]}) );
+                if (response.tweets.statuses[i].geo != null){
+                    results.push(
+                        newTweetObj(
+                            response.tweets.statuses[i].user.screen_name,
+                            response.tweets.statuses[i].text,
+                            response.tweets.statuses[i].geo.coordinates[0],
+                            response.tweets.statuses[i].geo.coordinates[1]
+                        )
+                    );
                 }
             }
-            $("body").append(
-                $('<br>') );
+            return results;
         },
         error: function(response){
             console.log("response: ", response);
@@ -64,7 +60,10 @@ function findTweets(searchFor, latitude, longitude, rad){
     });
 }
 
+
 /*
 $(document).ready(function () {
     findTweets("cats", 33.6694, -117.8231, 50);
-});*/
+
+});
+*/
