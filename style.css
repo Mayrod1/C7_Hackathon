@@ -1,0 +1,11 @@
+header{
+    border: solid black 1px;
+    text-align: center;
+}
+
+aside{
+    border: dashed pink 2px;
+    height: 75vh;
+    width: 15vw;
+    float: right;
+}
