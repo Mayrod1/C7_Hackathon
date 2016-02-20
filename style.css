@@ -1,13 +1,15 @@
 body{
     position: relative;
-
 }
 header{
     text-align: center;
     font-family: Arial Verdana, sans-serif;
 }
 
-aside{
+#main-container{
+    margin: 0 auto;
+}
+.stats-container{
     height: 90vh;
     width: 15vw;
     float: right;
@@ -39,4 +41,13 @@ input{
 .label{
     background-color: white;
     border: 1px solid black;
+}
+#footer {
+    height: 15vh;
+    text-align:center;
+    list-style-type: none;
+}
+
+a, a:visited {
+    text-decoration: none;
 }
