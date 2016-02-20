@@ -87,6 +87,23 @@ function find_tweet_URL(tweet){
 }
 //var url = find_tweet_URL(exampleTweet);
 //console.log(url);
-
-
+/**
+* activates modal and sets modal close event on ready
+* */
+function modalActive(mode){ //no returns, utility
+    var modal = $("#" + mode); //jquery method to check if hidden
+    if ( modal.is( ":hidden" ) ) {
+        // pointing to a jquery selector in a variable modal previously declared
+        modal.css( "display", "block" );
+    }
+    else{
+        // pointing to a jquery selector in a variable modal previously declared
+        modal.css( "display", "none");
+    }
+}
+$(document).ready(function(){
+    $("#Modal").click(function(){
+        modalActive("Modal");
+    })
+});
 
