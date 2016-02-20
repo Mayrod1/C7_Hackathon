@@ -62,7 +62,7 @@ input{
 
 .modal-content {
     position: relative;
-    background-color: #51684D;
+    background-color: #156068;
     margin: auto;
     padding: 0;
     border: 1px solid #888;
@@ -85,8 +85,14 @@ input{
     color: #39aeff;
 }
 .modal-body {
+    display: flex;
+    justify-content: center;
+    width: auto;
     height: 60vh;
     padding: 2px 16px;
+}
+.modal-body img{
+
 }
 
 .modal-footer {
