@@ -41,6 +41,12 @@ function resetTweetResults()
 }
 
 /*
+*
+*
+* */
+
+
+/*
  * findTweets
  * @params - searchfor (string, search term), latitude (float, search term),
  *   longitude (float, search term), rad (float, search term)
@@ -48,7 +54,7 @@ function resetTweetResults()
  *  finds tweets WITH geotags that mention searchFor, near the given location
  *
  * */
-function findTweets(searchFor, latitude, longitude, rad){
+function findTweets(searchFor, latitude, longitude, rad, callback){
     console.log('shere');
     var results = [];
     $.ajax({
@@ -83,6 +89,7 @@ function findTweets(searchFor, latitude, longitude, rad){
 
             tweetArrayToMarker(tweetResults);
 
+            areaTweets();
         },
         error: function(response){
             console.log("response: ", response);
@@ -91,20 +98,41 @@ function findTweets(searchFor, latitude, longitude, rad){
 }
 
 /*
- * globalTweets
- * @params - searchfor (string, search term), latitude (float, search term),
- *   longitude (float, search term), rad (float, search term)
+ * areaTweets
+ * @params - searchfor (string, search term), southBound (float, search term),
+ *   westBound (float, search term), northBound (float, search term),
+ *   eastBound (float, search term)
  *
- *  finds tweets WITH geotags that mention searchFor, near the given location
- *
+ *  finds tweets WITH geotags that mention searchFor, within the given boundaries from SOUTHWEST to NORTHEAST
+ *  NOTE - startLat and startLong are assumed to be the smaller numbers
  * */
+var areaTemp = [];
+
+function areaTweets(searchFor, southBound, westBound, northBound, eastBound)
+{
+    if (searchFor !== undefined)
+    {
+        areaTemp = [searchFor, southBound, westBound, northBound, eastBound];
+
+        findTweets(searchFor, southBound, westBound, 69);
+        return;
+    }
+
+    areaTemp[1]++;
+    areaTemp[2]++;
+    if ( (areaTemp[1] < areaTemp[3]) )//|| (areaTemp[2] > areaTemp[4]) )
+    {
+        findTweets(areaTemp[0], areaTemp[1], areaTemp[2], 69);
+    }
+}
 
 
-
-$(document).ready(function () {
-    /*
+/*$(document).ready(function () {
     // dummy data
-    findTweets("ground", 33.6694, -117.8231, 50);
+    //findTweets("", 33.6694, -117.8231, 50);
+    //console.log("single call: ", tweetResults);
+    //areaTweets("", 23, -124, 48, -68);
+    //console.log("multi call: ", tweetResults);
 
     $('button').click(function() {
         for (var i = 0; i < tweetResults.length; i++) {
@@ -117,6 +145,6 @@ $(document).ready(function () {
 
             console.log(i);
         }
-    });*/
+    });
 
-});
+});*/

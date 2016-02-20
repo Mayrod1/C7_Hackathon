@@ -1,7 +1,7 @@
 var apiFlickr = new ApiFlickr();
 
 /**
- * ApiFlickr - Constructs an object with interfacing with Flickr's API.
+ * ApiFlickr - Constructs an object for interfacing with Flickr's API.
  * @constructor
  */
 function ApiFlickr() {
@@ -48,13 +48,13 @@ function ApiFlickr() {
     };
 
     /**
-     * getImageUrl - Returns the static url for the given image.  If a size is also given, image url returned is that size.
+     * getImageUrlBySize - Returns the static url for the given image of the given size.
      * @param {Object} photoObject - Object containing a single image object.
      * @param {string|number} size - Character suffix for determining size of image in returned object. See https://www.flickr.com/services/api/misc.urls.html for list of suffixes.
      *  If a number is used, the size of the image is taken so that the largest dimension is at least that number of pixels.
      * @returns {string}
      */
-    this.getImageUrl = function(photoObject, size){
+    this.getImageUrlBySize = function(photoObject, size){
         var photoUrl = "https://farm" + photoObject.farm + ".staticflickr.com/" + photoObject.server + "/" + photoObject.id + "_" + photoObject.secret;
         if (typeof size == "string") {
             photoUrl += "_" + size;
@@ -98,6 +98,8 @@ function ApiFlickr() {
             dataType: "JSON",
             data: dataObject,
             success: function (response) {
+                console.log("dataObject: ", dataObject);
+                console.log("response: ", response);
                 callback(response.photos.photo);
             },
             fail: function (response) {
@@ -150,7 +152,7 @@ function ApiFlickr() {
      */
     function RadialData (searchText, dateRange, location) {
         FlickrData.call(this, searchText, dateRange);
-        this.long = location[0];
+        this.lon = location[0];
         this.lat = location[1];
         this.radius = location[2];
         this.radius_units = "mi";
