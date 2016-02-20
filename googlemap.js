@@ -5,7 +5,7 @@ google.maps.event.addDomListener(window, 'load', initMap);
 //initializes google map
 var monkeyMap;
 var photos = [];
-var cycling = true;
+var cycling = false;
 var photoMode = true;
 var tweetMode = true;
 //storage object for map markers, can cycle through markers on map;
@@ -23,9 +23,9 @@ var storage = {
 
             if(cycling) storage.cycle();
             clearTimeout(timer);
-        }, 2000);
+        }, 4000);
     }
-}
+};
 //learningfuze coords
 var learningFuze = new google.maps.LatLng(33.64,-117.75);
 /**
@@ -57,10 +57,10 @@ function initMap(){
 function getLocation(text, coords, radius) {
     var lat = coords.latLng.lat();
     var lon = coords.latLng.lng();
-    //console.log(coords.latLng.lat(), coords.latLng.lng());
+    console.log(coords.latLng.lat(), coords.latLng.lng());
     //findCloseTweets(coords.latLng.lat(), coords.latLng.lng());
     if (tweetMode) {
-        findTweets(text, lat, lon, radius);
+        findTweets(text, lat, lon, radius, tweetArrayToMarker);
     }
     if(photoMode){
         apiFlickr.radiusSearch(photocaller, text, [], lon, lat, 20);
@@ -223,7 +223,7 @@ function display_photo(photo){
         src: photo.url_m
     });
     var photoFrame = $('<div>',{
-        class: 'flickr',
+        class: 'flickr'
     });
 
     photoFrame.append(image);
