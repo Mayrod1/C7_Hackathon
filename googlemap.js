@@ -25,7 +25,7 @@ var storage = {
             clearTimeout(timer);
         }, 2000);
     }
-}
+};
 //learningfuze coords
 var learningFuze = new google.maps.LatLng(33.64,-117.75);
 /**
@@ -223,7 +223,7 @@ function display_photo(photo){
         src: photo.url_m
     });
     var photoFrame = $('<div>',{
-        class: 'flickr',
+        class: 'flickr'
     });
 
     photoFrame.append(image);
