@@ -87,23 +87,26 @@ function setMark(tweet){
             var pos = new google.maps.LatLng(tweet.latitude, tweet.longitude);
             //change the icon picture and scale of the map marker pin
             var icon = {
-                url: "images/tweet.png",
+                url: "images/tweet_circle.png",
                 scaledSize: new google.maps.Size(25, 25), // scaled size
                 origin: new google.maps.Point(0, 0), // origin
                 anchor: new google.maps.Point(0, 0) // anchor
+
             };
             //position of maker and animation/icon setting
             var marker = new google.maps.Marker({
                 position: pos,
                 //animation:google.maps.Animation.BOUNCE,
-                icon: icon,
-                labelClass: "label" //the CSS class for the label
+                icon: icon
+                //labelContent: "moocow",
+                //labelAnchor: new google.maps.Point(10, 10),
+                //labelClass: "moocow" //the CSS class for the label
             });
             //tweet name and info holder
             var infowindow = new google.maps.InfoWindow({
 
-                content: "<h2>" + tweet.screenName + "</h2><a href='"+ find_tweet_URL(tweet.tweetText) +"'>instagram</a> <div" +
-                    " class='tweets'>" + tweet.tweetText + "</div>"
+                content: "<h2>" + tweet.screenName + "</h2><a href='"+ find_tweet_URL(tweet.tweetText) +"'>instagram</a><div" +
+                    " class='tweets'><p>" + tweet.tweetText + "</p></div>"
 
             });
             //set the market on monkey map
