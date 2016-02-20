@@ -101,9 +101,19 @@ function modalActive(mode){ //no returns, utility
         modal.css( "display", "none");
     }
 }
+
+function cycleMarkers(){
+    cycling = cycling ? false: true;
+    storage.cycle();
+}
+
 $(document).ready(function(){
     $("#Modal").click(function(){
         modalActive("Modal");
     })
+    $("#cycle").click(function(){
+        cycleMarkers();
+    })
+
 });
 
