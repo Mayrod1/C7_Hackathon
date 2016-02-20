@@ -89,7 +89,6 @@ function findTweets(searchFor, latitude, longitude, rad, callback){
 
             tweetArrayToMarker(tweetResults);
 
-            //tweetArrayToMarker(results);
             areaTweets();
         },
         error: function(response){
@@ -99,24 +98,23 @@ function findTweets(searchFor, latitude, longitude, rad, callback){
 }
 
 /*
-//  A BRIDGE TOO FAR
  * areaTweets
- * @params - searchfor (string, search term), startLat (float, search term),
- *   startLong (float, search term), endLat (float, search term),
- *   endLong (float, search term)
+ * @params - searchfor (string, search term), southBound (float, search term),
+ *   westBound (float, search term), northBound (float, search term),
+ *   eastBound (float, search term)
  *
- *  finds tweets WITH geotags that mention searchFor, within the given boundaries
+ *  finds tweets WITH geotags that mention searchFor, within the given boundaries from SOUTHWEST to NORTHEAST
  *  NOTE - startLat and startLong are assumed to be the smaller numbers
  * */
 var areaTemp = [];
 
-function areaTweets(searchFor, startLat, startLong, endLat, endLong)
+function areaTweets(searchFor, southBound, westBound, northBound, eastBound)
 {
     if (searchFor !== undefined)
     {
-        areaTemp = [searchFor, startLat, startLong, endLat, endLong];
+        areaTemp = [searchFor, southBound, westBound, northBound, eastBound];
 
-        findTweets(searchFor, startLat, startLong, 69);
+        findTweets(searchFor, southBound, westBound, 69);
         return;
     }
 
@@ -129,16 +127,9 @@ function areaTweets(searchFor, startLat, startLong, endLat, endLong)
 }
 
 
-$(document).ready(function () {
+/*$(document).ready(function () {
     // dummy data
-    findTweets("", 33.6694, -117.8231, 50);
-    findTweets("", 34.6694, -117.8231, 50);
-    findTweets("", 35.6694, -117.8231, 50);
-    findTweets("", 36.6694, -117.8231, 50);
-    findTweets("", 37.6694, -117.8231, 50);
-    findTweets("", 38.6694, -117.8231, 50);
-    findTweets("", 39.6694, -117.8231, 50);
-    findTweets("", 40.6694, -117.8231, 50);
+    //findTweets("", 33.6694, -117.8231, 50);
     //console.log("single call: ", tweetResults);
     //areaTweets("", 23, -124, 48, -68);
     //console.log("multi call: ", tweetResults);
@@ -156,4 +147,4 @@ $(document).ready(function () {
         }
     });
 
-});
+});*/
