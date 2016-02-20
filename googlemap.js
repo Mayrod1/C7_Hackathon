@@ -59,7 +59,7 @@ function getLocation(text, coords, radius){
         findTweets(text, coords.latLng.lat(), coords.latLng.lng(), radius);
     }
     if(photoMode){
-        apiFlickr.radiusSearch(photocaller, text, [], coords.latLng.lng(), coords.latLng.lat(), 2);
+        apiFlickr.radiusSearch(photocaller, text, [], coords.latLng.lng(), coords.latLng.lat(), 20);
     }
 
 }
@@ -69,10 +69,10 @@ function getLocation(text, coords, radius){
  * return: nothing, stores photos in array
  * */
 function photocaller(response){
-    for(var i in response){
+    /*for(var i in response){
         photos.push(response[i]);
-    }
-    photoArrayToMarker(photos);
+    }*/
+    photoArrayToMarker(response);
 }
 
 //apiFlickr.unlocalizedSearch(function(a){ b = apiFlickr.getImageUrl(a.photos.photo[9], 200)}, "cat", [])
@@ -179,7 +179,7 @@ function setPhoto(photo){
     });
     //photo title and image holder
     var infowindow = new google.maps.InfoWindow({
-        content: "<div class='flickrphoto'><h2>" + photo.title + "</h2> <img src='" + apiFlickr.getImageUrl(photo,0) + "'></div>"
+        content: "<div class='flickrphoto'><h2>" + photo.title + "</h2> <img src='" + photo.url_q + "'></div>"
     });
     //set the market on monkey map
     marker.setMap(monkeyMap);
