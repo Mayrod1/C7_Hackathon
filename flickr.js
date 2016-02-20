@@ -98,8 +98,6 @@ function ApiFlickr() {
             dataType: "JSON",
             data: dataObject,
             success: function (response) {
-                console.log("dataObject: ", dataObject);
-                console.log("response: ", response);
                 callback(response.photos.photo);
             },
             fail: function (response) {
@@ -127,7 +125,7 @@ function ApiFlickr() {
             }
         }
         this.has_geo = 1;
-        this.per_page = 100;
+        this.per_page = 30;
         this.content_type = 1;
         this.extras = "geo,url_sq,url_t,url_s,url_q,url_m,url_n,url_z,url_c,url_l,url_o";
     }
@@ -156,7 +154,7 @@ function ApiFlickr() {
         this.lat = location[1];
         this.radius = location[2];
         this.radius_units = "mi";
-        this.per_page = 50;
+        this.per_page = 15;
     }
 
     /**

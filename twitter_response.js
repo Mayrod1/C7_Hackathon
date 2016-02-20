@@ -57,6 +57,7 @@ function resetTweetResults()
 function findTweets(searchFor, latitude, longitude, rad, callback){
     console.log('shere');
     var results = [];
+    resetTweetResults();
     $.ajax({
         dataType: "JSON",
         api_key: "LEARNING",
@@ -87,9 +88,10 @@ function findTweets(searchFor, latitude, longitude, rad, callback){
             /*console.log("tweetResults: ", tweetResults);
             return tweetResults;*/
 
-            tweetArrayToMarker(tweetResults);
+            callback(tweetResults);
 
-            areaTweets();
+            //areaTweets();
+
         },
         error: function(response){
             console.log("response: ", response);

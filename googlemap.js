@@ -5,9 +5,10 @@ google.maps.event.addDomListener(window, 'load', initMap);
 //initializes google map
 var monkeyMap;
 var photos = [];
-var cycling = true;
+var cycling = false;
 var photoMode = true;
 var tweetMode = true;
+//storage object for map markers, can cycle through markers on map;
 var storage = {
     index: 0,
     mapMarkerArray: [],
@@ -22,18 +23,19 @@ var storage = {
 
             if(cycling) storage.cycle();
             clearTimeout(timer);
-        }, 2000);
+        }, 4000);
     }
-}
+};
 //learningfuze coords
 var learningFuze = new google.maps.LatLng(33.64,-117.75);
 /**
 * function: initMap  - creates google maps on page
+ * does: sets a click hander to activate getLocation when map is clicked
 * */
 function initMap(){
     var mapProp = {
         center: learningFuze,
-        zoom: 5,
+        zoom: 9,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     //creates our map on the ID with MainMap
@@ -52,30 +54,32 @@ function initMap(){
  * params: a search string, coordinates lat-long integers, radius to search for
  * return: nothing, calls searches depending on toggles enabled
  * */
-function getLocation(text, coords, radius){
-    //console.log(coords.latLng.lat(), coords.latLng.lng());
+function getLocation(text, coords, radius) {
+    var lat = coords.latLng.lat();
+    var lon = coords.latLng.lng();
+    console.log(coords.latLng.lat(), coords.latLng.lng());
     //findCloseTweets(coords.latLng.lat(), coords.latLng.lng());
-    if(tweetMode){
-        findTweets(text, coords.latLng.lat(), coords.latLng.lng(), radius);
+    if (tweetMode) {
+        findTweets(text, lat, lon, radius, tweetArrayToMarker);
     }
     if(photoMode){
-        apiFlickr.radiusSearch(photocaller, text, [], coords.latLng.lng(), coords.latLng.lat(), 20);
+        apiFlickr.radiusSearch(photocaller, text, [], lon, lat, 20);
     }
-
 }
+
 /**
  * function photocaller
  * params: response array
  * return: nothing, stores photos in array
  * */
-function photocaller(response){
-    /*for(var i in response){
-        photos.push(response[i]);
-    }*/
-    photoArrayToMarker(response);
-}
+function photocaller(response) {
 
-//apiFlickr.unlocalizedSearch(function(a){ b = apiFlickr.getImageUrl(a.photos.photo[9], 200)}, "cat", [])
+    console.log("flickrApi success: ", response);
+    for (var i in response) {
+        photos.push(response[i]);
+        photoArrayToMarker(response);
+    }
+}
 /**
 * function setMarks
 * params: an array of tweets with lat and long properties
@@ -87,24 +91,34 @@ function setMark(tweet){
             var pos = new google.maps.LatLng(tweet.latitude, tweet.longitude);
             //change the icon picture and scale of the map marker pin
             var icon = {
-                url: "images/tweet.png",
+                url: "images/tweet_circle.png",
                 scaledSize: new google.maps.Size(25, 25), // scaled size
                 origin: new google.maps.Point(0, 0), // origin
                 anchor: new google.maps.Point(0, 0) // anchor
+
             };
             //position of maker and animation/icon setting
             var marker = new google.maps.Marker({
                 position: pos,
                 //animation:google.maps.Animation.BOUNCE,
-                icon: icon,
-                labelClass: "label" //the CSS class for the label
+                icon: icon
+                //labelContent: "moocow",
+                //labelAnchor: new google.maps.Point(10, 10),
+                //labelClass: "moocow" //the CSS class for the label
             });
+
+            //var btn = $("<div>", {
+            //    html: "<button class='btn'>Click</button>"
+            //})
+            //btn.click(function () {
+            //    console.log(tweet);
+            //    //storage.mapMarkerArray.splice(storage.mapMarkerArray.indexOf(tweet), 1);
+            //});
             //tweet name and info holder
             var infowindow = new google.maps.InfoWindow({
-
-                content: "<h2>" + tweet.screenName + "</h2><a href='"+ find_tweet_URL(tweet.tweetText) +"'>instagram</a> <div" +
-                    " class='tweets'>" + tweet.tweetText + "</div>"
-
+                content: "<div class='tweets'><h2>" + tweet.screenName +
+                "</h2><a href='"+ tweet.link +"' target='_blank'>Link</a><p>" + tweet.tweetText +
+                "</p></div>"
             });
             //set the market on monkey map
             marker.setMap(monkeyMap);
@@ -118,10 +132,18 @@ function setMark(tweet){
             //add event listener to open text window again
             google.maps.event.addListener(marker, 'click', function () {
                 infowindow.open(monkeyMap, this);
+                console.log(tweet);
             });
+
+
             //add tweet to storage holder TODO: add tweet message to parse through
-            storage.mapMarkerArray.push([marker, infowindow]);
+            storage.mapMarkerArray.push([marker, infowindow, tweet]);
 }
+//failed tweet button can't grab object
+function tweetBtn(tweet){
+    console.log(tweet);
+}
+
 /**
  * Function: tweetArrayToMarker
  * Params: tweet array
@@ -130,16 +152,13 @@ function setMark(tweet){
 function tweetArrayToMarker(tweets){
 
     for(var i in tweets){
-        var link = "http://www.google.com"//linkExtractor(tweets);
+        var link = find_tweet_URL(tweets[i].tweetText);
 
         tweets[i].link = link ? link: "";
 
         setMark(tweets[i])
     }
 }
-
-
-
 
 
 /**
@@ -176,7 +195,9 @@ function setPhoto(photo){
     });
     //photo title and image holder
     var infowindow = new google.maps.InfoWindow({
-        content: "<div class='flickrphoto'><h2>" + photo.title + "</h2> <img src='" + photo.url_q + "'></div>"
+        content: "<div class='flickrphoto'><h2>" + photo.title +
+        "</h2> <img src='" + photo.url_q +
+        "'></div>"
     });
     //set the market on monkey map
     marker.setMap(monkeyMap);
@@ -186,12 +207,33 @@ function setPhoto(photo){
 
     //add event listener to open text window again
     google.maps.event.addListener(marker, 'click', function () {
+        display_photo(photo);
         infowindow.open(monkeyMap, this);
+        console.log(photo);
     });
     //add photo to storage holder TODO: add tweet message to parse through
     storage.mapMarkerArray.push([marker, infowindow]);
 }
 
+function display_photo(photo){
+
+    var modal_element = $('#Modal');
+
+    var image = $('<img>',{
+        src: photo.url_m
+    });
+    var photoFrame = $('<div>',{
+        class: 'flickr'
+    });
+
+    photoFrame.append(image);
+    modal_element.find('.modal-body').html('').append(photoFrame);
+    modalActive("Modal");
+}
+
+$(".close").click(function(){
+    modalActive("Modal");
+})
 
 /**
 * Function createTweets
@@ -234,3 +276,5 @@ function findCloseTweets(x, y){
 
     setMark(coord);
 }
+
+
