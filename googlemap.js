@@ -62,9 +62,8 @@ function getLocation(text, coords, radius) {
     if (tweetMode) {
         findTweets(text, lat, lon, radius);
     }
-    if (photoMode) {
-        console.log("flicr Params: ", text, lat, lon, radius);
-        apiFlickr.radiusSearch(photocaller, text, [], lon, lat, 5);
+    if(photoMode){
+        apiFlickr.radiusSearch(photocaller, text, [], lon, lat, 20);
     }
 }
 
@@ -73,14 +72,14 @@ function getLocation(text, coords, radius) {
  * params: response array
  * return: nothing, stores photos in array
  * */
-function photocaller(response){
-    console.log("flickrApi success: " ,response);
-    for(var i in response){
-        photos.push(response[i]);
-    }
-    photoArrayToMarker(photos);
-}
+function photocaller(response) {
 
+    console.log("flickrApi success: ", response);
+    for (var i in response) {
+        photos.push(response[i]);
+        photoArrayToMarker(response);
+    }
+}
 /**
 * function setMarks
 * params: an array of tweets with lat and long properties
@@ -194,7 +193,7 @@ function setPhoto(photo){
     //photo title and image holder
     var infowindow = new google.maps.InfoWindow({
         content: "<div class='flickrphoto'><h2>" + photo.title +
-        "</h2> <img src='" + apiFlickr.getImageUrl(photo,0) +
+        "</h2> <img src='" + photo.url_q +
         "'></div>"
     });
     //set the market on monkey map
