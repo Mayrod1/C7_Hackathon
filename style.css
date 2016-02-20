@@ -1,32 +1,93 @@
 body{
     position: relative;
-
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("images/dark_embroidery.png");
+    color: #eee;
 }
+
+.container {
+    height: 100%;
+    width: 95%;
+    margin: 0 auto;
+}
+
+
+#header-container {
+    width: 100%;
+    height: 15%;
+}
+
 header{
     text-align: center;
     font-family: Arial Verdana, sans-serif;
 }
 
+header h1 {
+    color: #ffc86e;
+}
+
+
+.about a {
+    font-size: 16px;
+    color: #ff5d00;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.about a:hover {
+    color: deepskyblue;
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: underline;
+}
+
 aside{
-    height: 90vh;
-    width: 15vw;
-    float: right;
+    height: 100%;
+    width: 10%;
+    display: inline-block;
     top: 35px;
     position: relative;
 
 }
+
+#map_container {
+    height: 75%;
+    width: 95%;
+    margin: 15px auto 0px;
+    padding: 10px;
+}
+
+
+
 #MainMap{
-    height: 90vh;
-    width: 81vw;
+    height: 100%;
+    width: 100%;
     display: inline-block;
-    top:30%;
-    border:1px solid blue;
     border-radius: 20px;
 }
+
+.borderimg2 {
+    border: 10px solid transparent;
+    padding: 15px;
+    -webkit-border-image: url(images/border.png) 30 stretch; /* Safari 3.1-5 */
+    -o-border-image: url(images/border.png) 30 stretch; /* Opera 11-12.1 */
+    border-image: url(images/border.png) 30 stretch;
+}
+
+.shadow {
+    -webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+}
+
 .tweets{
     font-size: 20px;
     color:red;
 }
+
 img{
     width: 50px;
     height: 50px;

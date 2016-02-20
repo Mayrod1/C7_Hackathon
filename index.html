@@ -12,33 +12,42 @@
 </head>
 <body>
 
-        <!--MAIN HEADER-->
+<div class="container">
+
+    <!--MAIN HEADER-->
     <div id="header-container">
         <header>
-            <h1>Popular Tweets by Location</h1>
-            <div>
-                <p><a href="about.html">About</a></p>   <!-- links to about page!-->
+            <h1>Popular Tweets by Location <span class="about"><a href="about.html"><em>About</em></a></span></h1><!-- links to
+            about
+            page!-->
+            <div class="search-container">
+                Mile Radius:
+                <input id="radius" type="range" name="points" min="0" max="100">
+                <input id="hashtag" type="text" placeholder="search">
+
+                <!--DIV FOR SEARCHING TWEETS-->
+                <div id="search-type">
+
+                </div>
             </div>
         </header>
-        </div>
-
-        <!--MAP AND GEOLOCATION DISPLAY/DATA-->
-    <div class="map-data" id="MainMap">
 
     </div>
 
+        <!--MAP AND GEOLOCATION DISPLAY/DATA-->
+    <div id="map_container" class="borderimg2">
+        <div class="map-data shadow" id="MainMap">
+
+        </div>
+    </div>
+
         <!--SEARCH FOR TWEETS AND OTHER DATA DISPLAYED-->
-        <aside class="search-container">
-            Mile Radius:
-            <input id="radius" type="range" name="points" min="0" max="100">
-            <input id="hashtag" type="text" placeholder="search">
 
 
-            <!--DIV FOR SEARCHING TWEETS-->
-            <div id="search-type">
 
-            </div>
-        </aside>
+
+
+</div>
 
 </body>
 </html>
