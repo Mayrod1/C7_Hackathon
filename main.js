@@ -68,3 +68,42 @@
 * does: loops through array and applies them to google map
 * returns: updates html, returns nothing
 * */
+
+/*
+ * Function: Extracts the url on each tweet
+ * params: tweet array
+ * does: loops through array extracts the url
+ * returns: url
+ * */
+
+//var exampleTweet = "Everyone once in a while you go to train some dogs & instead you get to hang out with bab https://t.co/NXdL9vEOxR";
+function find_tweet_URL(tweet){
+
+    var output;
+    console.log(tweet);
+    output = tweet.match(/(https[a-zA-Z0-9\:\.\/]+).*/);
+    return output[1];
+
+}
+//var url = find_tweet_URL(exampleTweet);
+//console.log(url);
+/**
+* activates modal and sets modal close event on ready
+* */
+function modalActive(mode){ //no returns, utility
+    var modal = $("#" + mode); //jquery method to check if hidden
+    if ( modal.is( ":hidden" ) ) {
+        // pointing to a jquery selector in a variable modal previously declared
+        modal.css( "display", "block" );
+    }
+    else{
+        // pointing to a jquery selector in a variable modal previously declared
+        modal.css( "display", "none");
+    }
+}
+$(document).ready(function(){
+    $("#Modal").click(function(){
+        modalActive("Modal");
+    })
+});
+
