@@ -98,8 +98,6 @@ function ApiFlickr() {
             dataType: "JSON",
             data: dataObject,
             success: function (response) {
-                console.log("dataObject: ", dataObject);
-                console.log("response: ", response);
                 callback(response.photos.photo);
             },
             fail: function (response) {
