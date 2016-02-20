@@ -57,10 +57,10 @@ function initMap(){
 function getLocation(text, coords, radius) {
     var lat = coords.latLng.lat();
     var lon = coords.latLng.lng();
-    //console.log(coords.latLng.lat(), coords.latLng.lng());
+    console.log(coords.latLng.lat(), coords.latLng.lng());
     //findCloseTweets(coords.latLng.lat(), coords.latLng.lng());
     if (tweetMode) {
-        findTweets(text, lat, lon, radius);
+        findTweets(text, lat, lon, radius, tweetArrayToMarker);
     }
     if(photoMode){
         apiFlickr.radiusSearch(photocaller, text, [], lon, lat, 20);
