@@ -78,7 +78,7 @@
 
 //var exampleTweet = "Everyone once in a while you go to train some dogs & instead you get to hang out with bab https://t.co/NXdL9vEOxR";
 function find_tweet_URL(tweet){
-
+    if(!tweet) return false;
     var output;
     console.log(tweet);
     output = tweet.match(/(https[a-zA-Z0-9\:\.\/]+).*/);
@@ -103,12 +103,15 @@ function modalActive(mode){ //no returns, utility
 }
 
 function cycleMarkers(){
-    cycling = cycling ? false: true;
-    storage.cycle();
+    apiMap.cycling = apiMap.cycling ? false: true;
+    apiMap.storage.cycle();
 }
 
 $(document).ready(function(){
     $("#Modal").click(function(){
+        modalActive("Modal");
+    })
+    $(".close").click(function () {
         modalActive("Modal");
     })
     $("#cycle").click(function(){
