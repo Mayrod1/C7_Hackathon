@@ -43,7 +43,7 @@ function GoogleMapsApi(apiname) {
     /**
      * Gets private markerIndex variable;
      * */
-    this.totalMarkers = function(){
+    this.getMarkerIndex = function(){
         return  markerIndex;
         console.log( markerIndex);
     };
@@ -87,6 +87,7 @@ function GoogleMapsApi(apiname) {
             api.storage.photos.push(obj[i]);
             setMarker(obj[i], "images/trump.png", 25 );
         }
+        setMarker.bind(obj)
     };
     /**
      * Function: photoArrayToMarker - a flickr specific map marker call
