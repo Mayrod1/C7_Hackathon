@@ -24,7 +24,13 @@
                 Mile Radius:
                 <input id="radius" type="range" name="points" min="0" max="100">
                 <input id="hashtag" type="text" placeholder="search">
-                <button id="cycle">Cycle Markers</button>
+
+                <div class="toggle-btn-grp joint-toggle">
+                    <label onclick="" class="toggle-btn" ><input disabled type="radio" name="group3"/>Cycle</label>
+                    <label onclick="" class="toggle-btn"><input id="cycleOn" type="radio" name="group3"/>On</label>
+                    <label onclick="" class="toggle-btn"><input id="cycleOff" type="radio" name="group3"/>Off</label>
+                    <label onclick="" class="toggle-btn"><input id="cycleSpeed" placeholder="2" type="number" max="10" min="1" name="group3"/></label>
+                </div>
                 <!--DIV FOR SEARCHING TWEETS-->
                 <div id="search-type">
 

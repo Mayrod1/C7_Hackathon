@@ -3,17 +3,25 @@
 var apiMap = new GoogleMapsApi("apiMap");
 //initializes google map
 function GoogleMapsApi(apiname) {
+    /**
+     * Private Variables only for GoogleMapsApi
+     * */
     var api = this;
     var apiName = apiname;
-    var totalphoto = 0;
+    var markerIndex = 0;
     var learningFuze = new google.maps.LatLng(33.64, -117.75);
-
-    this.monkeyMap;
+    /**
+     * Public Variables adjust to manipulate GoogleMapsApi
+     * */
+    this.monkeyMap = null;
     this.cycling = false;
     this.photoMode = true;
     this.tweetMode = true;
-
- //storage object for map markers, can cycle through markers on map;
+    /**
+     * Main storage Object of GoogleMapsApi
+     * holds a marker array its current index
+     * and cycle marker function
+     * */
     this.storage = {
         photos : [],
         index: 0,
@@ -21,53 +29,67 @@ function GoogleMapsApi(apiname) {
         cycle: function (duration) {
             console.log(this.index);
             var d = duration ? duration: 2000;
+            var p = api.storage;
+            p.mapMarkerArray[p.index].infowindow.open(api.monkeyMap, p.mapMarkerArray[p.index].marker);
             var timer = setTimeout(function () {
-                var p = api.storage;
-                if (p.index > 0)p.mapMarkerArray[p.index - 1].infowindow.close();
-                //api.monkeyMap, this.mapMarkerArray[this.index - 1][0]   params
-                if (p.index > p.mapMarkerArray.length - 1) p.index = 0;
-
-                p.mapMarkerArray[p.index].infowindow.open(api.monkeyMap, p.mapMarkerArray[p.index].marker);
+                p.mapMarkerArray[p.index ].infowindow.close();
                 p.index++;
-
-                if (api.cycling) api.storage.cycle();
+                if (p.index > p.mapMarkerArray.length - 1) p.index = 0;
+                if (api.cycling) api.storage.cycle($("#cycleSpeed").val() * 1000);
                 clearTimeout(timer);
             }, d);
         }
     };
-
-    this.totalFinder = function(a){
-        if(a) totalphoto = a;
-        console.log(totalphoto);
+    /**
+     * Gets private markerIndex variable;
+     * */
+    this.totalMarkers = function(){
+        return  markerIndex;
+        console.log( markerIndex);
     };
-    this.clearMarkers = function(){
-        for (var i = 0; i < markers.length; i++) {
-            api.monkeyMap.setMapOnAll(null);
+    /**
+     * Sets private markerIndex variable;
+     * */
+    this.setMarkers = function(num){
+         markerIndex = num;
+    };
+    /**
+     * Public method hides all all Markers
+     * */
+    this.hideMarkers = function(){
+        for (var i = 0; i < api.storage.mapMarkerArray.length ; i++) {
+            api.storage.mapMarkerArray[i].marker.setMap(null);
         }
     };
-    this.showAll = function(){
-        for (var i = 0; i < markers.length; i++) {
+    /**
+     * Public method displays all all Markers
+     * */
+    this.showMarkers = function(){
+        for (var i = 0; i <  api.storage.mapMarkerArray.length; i++) {
             api.storage.mapMarkerArray[i].marker.setMap(api.monkeyMap);
         }
     };
-
-    this.removeall = function(){
-        //clearMarkers();
+    /**
+     * Public method deletes all all Markers
+     * */
+    this.deleteMarkers = function(){
+        api.hideMarkers();
         api.storage.mapMarkerArray = [];
+        api.setMarkers(0);
     };
     /**
-     * Function: genericToMarker
-     * Params: object array that holds latitude/longitude display properties to display
-     * runs through photo array sends them to be marked
+     * Function: objToMarker  - a generic map marker call
+     * Params: object array - object must contain properties(longitude, latitude)
+     * runs through object array sends them to be marked
      * */
     this.objToMarker = function(obj) {
         for (var i = 0; i < obj.length; i++) {
             api.storage.photos.push(obj[i]);
-            setMarker(obj[i]);
+            setMarker(obj[i], "images/trump.png", 25 );
         }
     };
     /**
-     * Function: photoArrayToMarker
+     * Function: photoArrayToMarker - a flickr specific map marker call
      * Params: flickr array
      * runs through photo array sends them to be marked
      * */
@@ -75,11 +97,11 @@ function GoogleMapsApi(apiname) {
         for (var i = 0; i < photos.length; i++) {
             photos[i].display = photos[i].url_z;
             api.storage.photos.push(photos[i]);
-            setMarker(photos[i], "images/flickrbox.png");
+            setMarker(photos[i], "images/flickrbox.png", 50);
         }
     };
     /**
-     * Function: tweetArrayToMarker
+     * Function: tweetArrayToMarker - a tweet specific map marker call
      * Params: tweet array
      * runs through tweet array and sends them to be marked
      * */
@@ -87,15 +109,16 @@ function GoogleMapsApi(apiname) {
         for (var i = 0; i < tweet.length; i++) {
             var link = find_tweet_URL(tweet[i].tweetText);
             tweet[i].link = link ? link : "";
-            setMarker(tweet[i], "images/tweet_circle.png");
+            var logo = tweet.profile ? tweet.profile : "images/tweet_circle.png";
+            setMarker(tweet[i], logo, 50);
         }
     };
     /**
      * function: initMap  - creates google maps on page
-     * does: sets a click hander to activate getLocation when map is clicked
+     * adjust mapProp properties to edit map config
+     * sets a click handler to activate getLocation when map is clicked
      * */
     function initMap() {
-        console.log("initilizing");
         var mapProp = {
             center: learningFuze,
             zoom: 9,
@@ -112,11 +135,12 @@ function GoogleMapsApi(apiname) {
             }
         });
     }
+    //On load call initMap, must come after initMap
     google.maps.event.addDomListener(window, 'load', initMap);
     /**
      * function getLocation
-     * params: a search string, coordinates lat-long integers, radius to search for
-     * return: nothing, calls searches depending on toggles enabled
+     * params: a search string, coordinates lat-long integers, radius integer in miles
+     * return: nothing, calls tweet and flicr searches depending on toggles enabled
      * */
     function getLocation(text, coords, radius) {
         var lat = coords.latLng.lat();
@@ -134,13 +158,13 @@ function GoogleMapsApi(apiname) {
      * params: an array of tweets with lat and long properties
      * return: nothing, applies markers to the map
      * */
-    function setMarker(data, logo) {
+    function setMarker(data, logo, size) {
         //create a point on google maps from tweet data
         var pos = new google.maps.LatLng(data.latitude, data.longitude);
         //change the icon picture and scale of the map marker pin
         var icon = {
             url: logo,
-            scaledSize: new google.maps.Size(25, 25), // scaled size
+            scaledSize: new google.maps.Size(size, size), // scaled size
             origin: new google.maps.Point(0, 0), // origin
             anchor: new google.maps.Point(0, 0) // anchor
         };
@@ -151,30 +175,31 @@ function GoogleMapsApi(apiname) {
             icon: icon
         });
 
-        var id = totalphoto;
-        //tweet name and info holder
-        if(logo !== "images/tweet_circle.png"){
-            var img = $("<image>", {
-                src:  data.display
-            });
-            var div = $("<div>", {
-                class: "flickerphoto",
-                html: "<h2>" + data.title + "</h2>" + img
-            });
-            var infowindow = new google.maps.InfoWindow({
+        var id =  markerIndex;
+        markerIndex++;
+        var infowindow;
+        //Check if its a tweet, photo or generic data and create appropriate infoWindow
+        if(logo == "images/flickrbox.png"){
+            infowindow = new google.maps.InfoWindow({
                 content: "<div id='" + id + "' class='flickrphoto'><h2>" + data.title +
                 "</h2><img onclick='" + apiName + ".display("+ id +")' src=" + data.url_q + "'>"
             });
         }
-        else{
-            var infowindow = new google.maps.InfoWindow({
+        else if(logo == "images/tweet_circle.png"){
+            infowindow = new google.maps.InfoWindow({
                 content: "<div class='tweets'><h2>" + data.screenName +
                 "</h2><a href='" + data.link + "' target='_blank'>Link</a><p>" + data.tweetText +
                 "</p></div>"
             });
         }
+        else{
+            infowindow = new google.maps.InfoWindow({
+                content: "<div class='tweets'><h2>" + data.title +
+                "</h2><a href='" + data.link + "' target='_blank'>Link</a><p>" + data.text +
+                "</p></div>"
+            });
+        }
 
-        totalphoto++;
         //set the market on monkey map
         marker.setMap(api.monkeyMap);
         // open the info window
@@ -184,18 +209,19 @@ function GoogleMapsApi(apiname) {
         data.marker = marker;
         data.infowindow = infowindow;
         api.storage.mapMarkerArray.push(data);
+
         //add event listener to open text window again
         google.maps.event.addListener(marker, 'click', function () {
-            infowindow.open(api.monkeyMap, this);
-            console.log(api.storage.mapMarkerArray[api.storage.mapMarkerArray.indexOf(data)]);
+             infowindow.open(api.monkeyMap, this);
+            //console.log(api.storage.mapMarkerArray[api.storage.mapMarkerArray.indexOf(data)]);
         });
-
     };
-//failed tweet button can't grab object
-    function tweetBtn(tweet) {
-        console.log(tweet);
-    }
-    this.display = function(index, display) {
+    /**
+     * Function display
+     * params: index integer, display item
+     * does: called on click to open modal with image in storage
+     * */
+    this.display = function(index, img) {
 
         var modal_element = $('#Modal');
 
@@ -227,7 +253,7 @@ function GoogleMapsApi(apiname) {
             newp.push(coord);
         }
         console.log(newp);
-        tweetArrayToMarker(newp);
+        api.tweetArrayToMarker(newp);
     };
     /**
      function findCloseTweets
@@ -249,6 +275,6 @@ function GoogleMapsApi(apiname) {
         var coord = {longitude: long, latitude: lati, screenName: "HillaTump", icon: person.pic, tweetText: tweet};
         console.log(coord.lat, coord.lon);
         //newp.push(coord);
-        setMarker(coord);
+        api.setMarker(coord);
     }
 }
