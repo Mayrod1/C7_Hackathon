@@ -29,8 +29,12 @@
                     <label onclick="" class="toggle-btn" ><input disabled type="radio" name="group3"/>Cycle</label>
                     <label onclick="" class="toggle-btn"><input id="cycleOn" type="radio" name="group3"/>On</label>
                     <label onclick="" class="toggle-btn"><input id="cycleOff" type="radio" name="group3"/>Off</label>
-                    <label onclick="" class="toggle-btn"><input id="cycleSpeed" placeholder="2" type="number" max="10" min="1" name="group3"/></label>
+                    <label onclick="" class="afterSpeed toggle-btn"><input id="cycleSpeed" placeholder="2" type="number" max="10" min="1" name="group3"/></label>
+                    <button onclick="apiMap.hideMarkers()">Hide</button>
+                    <button onclick="apiMap.showMarkers()">Show</button>
+                    <button onclick="apiMap.deleteMarkers()">Delete</button>
                 </div>
+
                 <!--DIV FOR SEARCHING TWEETS-->
                 <div id="search-type">
 

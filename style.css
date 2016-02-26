@@ -62,7 +62,10 @@ header h1 {
 .search-container button:hover {
     background-color: #ff5d00;
 }
-
+.afterSpeed::after{
+    content: "Speed";
+    font-size: 12px;
+}
     /*aside{*/
     /*height: 100%;*/
     /*width: 10%;*/
