@@ -76,14 +76,15 @@
  * returns: url
  * */
 
+
+
 //var exampleTweet = "Everyone once in a while you go to train some dogs & instead you get to hang out with bab https://t.co/NXdL9vEOxR";
 function find_tweet_URL(tweet){
-
+    if(!tweet) return false;
     var output;
-    console.log(tweet);
+    //console.log(tweet);
     output = tweet.match(/(https[a-zA-Z0-9\:\.\/]+).*/);
     return output[1];
-
 }
 //var url = find_tweet_URL(exampleTweet);
 //console.log(url);
@@ -102,18 +103,31 @@ function modalActive(mode){ //no returns, utility
     }
 }
 
-function cycleMarkers(){
-    cycling = cycling ? false: true;
-    storage.cycle();
-}
-
 $(document).ready(function(){
     $("#Modal").click(function(){
+        modalActive("Modal");
+    })
+    $(".close").click(function () {
         modalActive("Modal");
     })
     $("#cycle").click(function(){
         cycleMarkers();
     })
+    var toggler = $(".toggle-btn input[type=radio]");
+    $(toggler).addClass("visuallyhidden");
+    $(toggler).change(function() {
+        console.log($);
+        if( $(this).attr("id") == "cycleOn" ) {
+            $(this).parent().addClass("success").siblings().removeClass("success");
+            apiMap.cycling = true;
+            apiMap.storage.cycle();
+        } else {
+            $(this).parent().toggleClass("success").siblings().removeClass("success");
+            apiMap.cycling = false;
+            apiMap.hideMarkers();
+            apiMap.showMarkers();
+        }
+    });
 
 });
 

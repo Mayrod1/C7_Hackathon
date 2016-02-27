@@ -62,7 +62,10 @@ header h1 {
 .search-container button:hover {
     background-color: #ff5d00;
 }
-
+.afterSpeed::after{
+    content: "Speed";
+    font-size: 12px;
+}
     /*aside{*/
     /*height: 100%;*/
     /*width: 10%;*/
@@ -186,4 +189,63 @@ input{
     padding: 2px 16px;
     background-color: #162929;
     color: white;
+}
+
+
+
+.toggle-btn {
+    text-align: center;
+    margin:5px 2px;
+    padding:0.4em 3em;
+    color:#000;
+    background-color:#FFF;
+    border-radius:10px;
+    display:inline-block;
+    border:solid 1px #CCC;
+    cursor:pointer;
+}
+
+
+.toggle-btn-grp {
+    margin:3px 0;
+}
+
+.toggle-btn-grp.joint-toggle .toggle-btn {
+    margin:5px 0;
+    padding:0.4em 2em;
+    border-radius:0;
+    border-right-color:white;
+}
+.toggle-btn-grp.joint-toggle .toggle-btn:first-child {
+    margin-left:2px;
+    border-radius: 10px 0px 0px 10px;
+}
+.toggle-btn-grp.joint-toggle .toggle-btn:last-child {
+    margin-right:2px;
+    border-radius: 0px 10px 10px 0px;
+    border-right:solid 1px #CCC;
+}
+
+.toggle-btn.success {
+    background:lightgreen;
+    border:solid 1px green !important;
+}
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+.visuallyhidden.focusable:active, .visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
 }
